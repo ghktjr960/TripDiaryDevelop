@@ -17,7 +17,7 @@
 		<h1>메인 페이지</h1>
 	</div>
 	
-	<!-- 
+	
 	<div class="container">
 		<img alt="" src="resources/img/1.jpg" style="width: 80%;">
 		<img alt="" src="resources/img/2.jpg" style="width: 80%;">
@@ -25,7 +25,7 @@
 		<img alt="" src="resources/img/2.jpg" style="width: 80%;">
 		<img alt="" src="resources/img/2.jpg" style="width: 80%;">
 	</div>
-	-->
+	
 	
 	
 	<!-- 
