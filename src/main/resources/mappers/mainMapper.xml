@@ -4,5 +4,47 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mainMapper">
 	
+	<!-- 
+		정렬하는거 다시 확인하고 DB에서 가져올 때 이름 맞춰주는거 확인 두 가지 동작안되고 있음
+		1.정렬값을 MainBoardListVo에 넣어주고 돌려보기
+	 	2.이름 맞추기 VO = DB
+	 -->
+	<resultMap type="com.tripdiary.vo.MainBoardListVo" id="mainResultMap">
+			<result property="boardNum" column="board_num"/>
+			<result property="memberNum" column="member_num"/>
+			<result property="place" column="place"/>
+			<result property="content" column="content"/>
+			<result property="regdate" column="regdate"/>
+			<result property="tripdate" column="tripdate"/>
+			<result property="tdLikeCnt" column="td_like_cnt"/>
+			<result property="orgFileName" column="org_file_name"/>
+			<result property="storeFileName" column="store_file_name"/>
+			<result property="nickname" column="nickname"/>
+	</resultMap> 
+	
+ 	<select id="mainBoardList" resultType="com.tripdiary.vo.MainBoardListVo" resultMap="mainResultMap">
+ 		select 
+ 			A.board_num, 
+ 			A.member_num, 
+ 			A.place, 
+ 			A.content, 
+ 			A.regdate, 
+ 			A.tripdate, 
+ 			A.td_like_cnt, 
+ 			B.org_file_name, 
+ 			B.store_file_name, 
+ 			C.nickname
+		from 
+			BOARD A, 
+			BOARD_IMG B, 
+			MEMBER C
+		where 
+			A.board_num = B.board_num 
+			and b.main_img = 1 
+			and a.member_num = c.member_num
+		order by a.regdate desc, a.board_num desc
+ 		
+ 	</select>
+ 	
  	
 </mapper>

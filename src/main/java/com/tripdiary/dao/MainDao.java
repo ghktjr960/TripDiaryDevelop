@@ -1,5 +1,10 @@
 package com.tripdiary.dao;
 
-public interface MainDao {
+import java.util.List;
 
+import com.tripdiary.vo.MainBoardListVo;
+
+public interface MainDao {
+	
+	public List<MainBoardListVo> mainBoardList(String sort) throws Exception;
 }

@@ -10,7 +10,7 @@ public class BoardVo {
 	private String content;
 	private Timestamp regdate;
 	private Date tripdate;
-	private int likeCnt;
+	private int tdLikeCnt;
 	
 	public BoardVo() {
 
@@ -52,17 +52,21 @@ public class BoardVo {
 	public void setTripdate(Date tripdate) {
 		this.tripdate = tripdate;
 	}
-	public int getLikeCnt() {
-		return likeCnt;
+	public int getTdLikeCnt() {
+		return tdLikeCnt;
 	}
-	public void setLikeCnt(int likeCnt) {
-		this.likeCnt = likeCnt;
+	public void setTdLikeCnt(int tdLikeCnt) {
+		this.tdLikeCnt = tdLikeCnt;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "BoardVo [boardNum=" + boardNum + ", memberNum=" + memberNum + ", place=" + place + ", content="
-				+ content + ", regdate=" + regdate + ", tripdate=" + tripdate + ", likeCnt=" + likeCnt + "]";
+				+ content + ", regdate=" + regdate + ", tripdate=" + tripdate + ", tdLikeCnt=" + tdLikeCnt + "]";
 	}
+	
+	
+
+	
 	
 }
