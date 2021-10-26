@@ -29,16 +29,28 @@ public class MainController {
 
 	@Inject
 	private MainService mainService;
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String mainView(Model model, HttpSession session) throws Exception {
+	
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public String main() {
+		return "redirect:/main";
+	}
+	
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String mainView(Model model, @RequestParam(value = "sort", required = false) String sort, HttpSession session) throws Exception {
 		
 		logger.info("main");
 		
 		try {
-			String sort = "regdate";
-			
+			if(sort == null && session.getAttribute("sort") == null) {
+				sort = "regdate";
+				session.setAttribute("sort", sort);
+			} else if(sort == null && session.getAttribute("sort") != null) {
+				sort = (String) session.getAttribute("sort");
+			} else if(sort != null) {
+				session.setAttribute("sort", sort);
+			}
 			System.out.println("sort : " + sort);
+			
 			List<MainBoardListVo> mainBoardList = mainService.mainBoardList(sort);
 			System.out.println(mainBoardList.toString());
 			model.addAttribute("mainBoardList", mainBoardList);
@@ -57,42 +69,6 @@ public class MainController {
 			}
 			// 세션 테스트용 코드 삭제해야됨 : 끝
 			
-			
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "main";
-	}
-	
-	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String mainViewSort(Model model, @RequestParam(value = "sort", required = false) String sort, HttpSession session) throws Exception {
-
-		logger.info("sort");
-
-		try {
-			if(sort == null) {
-				sort = "regdate";
-			}
-			System.out.println("sort : " + sort);
-			List<MainBoardListVo> mainBoardList = mainService.mainBoardList(sort);
-			System.out.println(mainBoardList.toString());
-			model.addAttribute("mainBoardList", mainService.mainBoardList(sort));
-
-			List<TagVo> mainTagList = mainService.mainTagList();
-			System.out.println(mainTagList.toString());
-			model.addAttribute("mainTagList", mainTagList);
-
-			// 세션 테스트용 코드 삭제해야됨 : 시작
-			MemberVo memberVo = (MemberVo) session.getAttribute("memberLoginTest");
-			if(memberVo != null) {
-				System.out.println(memberVo.toString());
-				List<PickVo> mainPickList = mainService.mainPickList(memberVo.getMemberNum());
-				System.out.println(mainPickList.toString());
-				model.addAttribute("mainPickList", mainPickList);
-			}
-			// 세션 테스트용 코드 삭제해야됨 : 끝
 			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -127,6 +103,7 @@ public class MainController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
 	// 세션 확인용 로그인 테스트 코드 : 삭제해야됨 : 끝
 	
 	@RequestMapping(value = "/pickClick", method = RequestMethod.GET)

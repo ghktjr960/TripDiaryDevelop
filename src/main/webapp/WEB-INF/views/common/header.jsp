@@ -9,7 +9,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light header shadow">
-		<a class="logo" href="/"><img alt="" src="resources/img/logo.png"></a>
+		<a class="logo" href="/main"><img alt="" src="resources/img/logo.png"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>

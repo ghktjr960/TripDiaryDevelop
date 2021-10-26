@@ -32,6 +32,7 @@
 	<!-- 전체 게시물 부분  -->
 	<div class="diary-mid row mt-5 mb-5">
 	
+	
 	<c:forEach items="${mainBoardList}" var="mainBoardList">
 			<!-- 게시물 1개 부분 이 주석 밑부분 부터 반복문 실행-->
 			<div class="col-sm-4 diary-board-container">
@@ -57,12 +58,12 @@
 									</c:forEach>
 									
 									<c:if test="${count > 0 }">
-										<a href="/pickClick?pickNum=${pickNum}&memberNum=${memberNum}&boardNum=${boardNum}">
+										<a href="/pickClick?pickNum=${pickNum}&memberNum=${memberNum}&boardNum=${boardNum}" onclick="alert('찜하기가 취소되었습니다.')">
 											<img alt="" src="resources/img/pick_basic_dark.png" class="" style="width: 40px; height: 40px; object-fit: cover;">
 										</a>
 									</c:if>
 									<c:if test="${count eq null}">
-										<a href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}">
+										<a href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}" >
 											<img alt="" src="resources/img/pick_basic_white.png" class="" style="width: 40px; height: 40px; object-fit: cover;">
 										</a>
 									</c:if>
@@ -98,7 +99,6 @@
 								<c:if test="${mainTagList.boardNum eq mainBoardList.boardNum }">
 									${mainTagList.tag}
 								</c:if>
-								
 							</c:forEach>
 						</div>
 							
