@@ -23,10 +23,23 @@
 	<div class="container">
 		<h1>메인 페이지</h1>
 	
-
-	<button onclick='location.href="/main?sort=regdate"'>작성일순</button>
-	<button onclick='location.href="/main?sort=tripdate"'>여행일순</button>
-	<button onclick='location.href="/main?sort=like"'>좋아요순</button>
+	<c:choose>
+		<c:when test="${sort eq 'regdate'}">
+			<button onclick='location.href="/main?sort=regdate"'><b>작성일순</b></button>
+			<button onclick='location.href="/main?sort=tripdate"'>여행일순</button>
+			<button onclick='location.href="/main?sort=like"'>좋아요순</button>
+		</c:when>	
+		<c:when test="${sort eq 'tripdate'}">
+			<button onclick='location.href="/main?sort=regdate"'>작성일순</button>
+			<button onclick='location.href="/main?sort=tripdate"'><b>여행일순</b></button>
+			<button onclick='location.href="/main?sort=like"'>좋아요순</button>
+		</c:when>	
+		<c:when test="${sort eq 'like'}">
+			<button onclick='location.href="/main?sort=regdate"'>작성일순</button>
+			<button onclick='location.href="/main?sort=tripdate"'>여행일순</button>
+			<button onclick='location.href="/main?sort=like"'><b>좋아요순</b></button>
+		</c:when>	
+	</c:choose>
 	<br>
 
 	<!-- 전체 게시물 부분  -->
