@@ -9,6 +9,12 @@ public class TagVo {
 
 	}
 	
+	public TagVo(int tagNum, int boardNum, String tag) {
+		this.tagNum = tagNum;
+		this.boardNum = boardNum;
+		this.tag = tag;
+	}
+	
 	public int getTagNum() {
 		return tagNum;
 	}

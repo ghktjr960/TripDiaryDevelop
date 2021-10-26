@@ -18,6 +18,14 @@ public class MemberVo {
 
 	}
 	
+	public MemberVo(int memberNum, String id, String password, String nickname) {
+		this.memberNum = memberNum;
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+	}
+	
+	
 	public int getMemberNum() {
 		return memberNum;
 	}

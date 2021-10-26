@@ -35,11 +35,6 @@ public class HomeController {
 		return "admin";
 	}
 	
-	@RequestMapping(value = "/signIn", method = RequestMethod.GET)
-	public String signIn() {
-		return "signIn";
-	}
-	
 	@RequestMapping(value = "myPage", method = RequestMethod.GET)
 	public String myPage() {
 		return "myPage";

@@ -39,12 +39,12 @@
 			</ul>
 			
 			<ul class="navbar-nav ms-auto">
-				<c:if test="${empty sessionScope.id }">
+				<c:if test="${empty memberLoginTest.id }">
 					<li class="nav-item active">
 						<a class="nav-link" href="/signIn">Sign in</a>
 					</li>
 				</c:if>
-				<c:if test="${not empty sessionScope.id }">
+				<c:if test="${not empty memberLoginTest.id }">
 					<div>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle " id="dropdown" data-toggle="dropdown">

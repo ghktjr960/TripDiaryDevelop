@@ -64,4 +64,22 @@
 .container{
 	margin-top: 7%;
 }
+.board-bottom{
+   text-align: left;   
+}
+.diary-board-container{
+      padding: 3%;
+}
+.image-thumbnail{
+   width: 338px;
+   height: 338px; 
+   object-fit: cover;
+}
+.icon2 {
+   transition: all 0.1s linear;
+}
+
+.icon2:hover {
+   transform: scale(1.05);
+}
 
