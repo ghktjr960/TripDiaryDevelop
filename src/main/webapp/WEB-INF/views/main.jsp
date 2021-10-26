@@ -87,9 +87,11 @@
 									
 								</c:if>
 								
-								<!-- 세션이 없는경우 클릭이 안되게 막음 -->
-								<c:if test="${mainPickList eq null}">
-									<img alt="" src="resources/img/pick_basic_white.png" class="" style="width: 40px; height: 40px; object-fit: cover;">
+								<!-- 세션이 없는경우 로그인으로 유도 -->
+								<c:if test="${memberLoginTest eq null}">
+									<a href="/signIn" onclick="alert('로그인 후 사용가능합니다.')">
+										<img alt="" src="resources/img/pick_basic_white.png" class="" style="width: 40px; height: 40px; object-fit: cover;">
+									</a>
 								</c:if>
 						</div>
 					</div>
