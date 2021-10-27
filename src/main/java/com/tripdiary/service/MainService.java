@@ -6,6 +6,7 @@ import com.tripdiary.controller.PickCmd;
 import com.tripdiary.vo.MainBoardListVo;
 import com.tripdiary.vo.MemberVo;
 import com.tripdiary.vo.PickVo;
+import com.tripdiary.vo.ProfileImgVo;
 import com.tripdiary.vo.TagVo;
 
 public interface MainService {
@@ -24,4 +25,6 @@ public interface MainService {
 	public void pickInsert(PickCmd pickCmd) throws Exception;
 
 	public void pickDelete(PickVo pickVo) throws Exception;
+	
+	public ProfileImgVo profileImg(int memberNum) throws Exception;
 }

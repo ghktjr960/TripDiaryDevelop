@@ -11,6 +11,7 @@ import com.tripdiary.dao.MainDao;
 import com.tripdiary.vo.MainBoardListVo;
 import com.tripdiary.vo.MemberVo;
 import com.tripdiary.vo.PickVo;
+import com.tripdiary.vo.ProfileImgVo;
 import com.tripdiary.vo.TagVo;
 
 @Service
@@ -53,5 +54,10 @@ public class MainServiceImpl implements MainService{
 	@Override
 	public void pickDelete(PickVo pickVo) throws Exception {
 		mainDao.pickDelete(pickVo);
+	}
+	
+	@Override
+	public ProfileImgVo profileImg(int memberNum) throws Exception {
+		return mainDao.profileImg(memberNum);
 	}
 }

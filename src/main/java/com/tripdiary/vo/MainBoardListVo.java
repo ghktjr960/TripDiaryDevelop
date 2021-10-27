@@ -13,17 +13,20 @@ public class MainBoardListVo {
 	private int tdLikeCnt;
 	private String mainOrgFileName;
 	private String mainStoreFileName;
+	private String mainFileType;
 	private String nickname;
 	private String profileOrgFileName;
 	private String profileStoreFileName;
+	private String profileFileType;
 	
 	public MainBoardListVo() {
 
 	}
 	
 	public MainBoardListVo(
-			int boardNum, int memberNum, String place, String content, Timestamp regdate, Date tripdate, int tdLikeCnt, 
-			String mainOrgFileName, String mainStoreFileName, String nickname, String profileOrgFileName, String profileStoreFileName) {
+			int boardNum, int memberNum, String place, String content, Timestamp regdate, Date tripdate, 
+			int tdLikeCnt, String mainOrgFileName, String mainStoreFileName, String mainFileType, String nickname, 
+			String profileOrgFileName, String profileStoreFileName, String profileFileType) {
 		
 		this.boardNum = boardNum;
 		this.memberNum = memberNum;
@@ -34,9 +37,11 @@ public class MainBoardListVo {
 		this.tdLikeCnt = tdLikeCnt;
 		this.mainOrgFileName = mainOrgFileName;
 		this.mainStoreFileName = mainStoreFileName;
+		this.mainFileType = mainFileType;
 		this.nickname = nickname;
 		this.profileOrgFileName = profileOrgFileName;
 		this.profileStoreFileName = profileStoreFileName;
+		this.profileFileType = profileFileType;
 	}
 
 	public int getBoardNum() {
@@ -111,6 +116,14 @@ public class MainBoardListVo {
 		this.mainStoreFileName = mainStoreFileName;
 	}
 
+	public String getMainFileType() {
+		return mainFileType;
+	}
+
+	public void setMainFileType(String mainFileType) {
+		this.mainFileType = mainFileType;
+	}
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -135,15 +148,24 @@ public class MainBoardListVo {
 		this.profileStoreFileName = profileStoreFileName;
 	}
 
+	public String getProfileFileType() {
+		return profileFileType;
+	}
+
+	public void setProfileFileType(String profileFileType) {
+		this.profileFileType = profileFileType;
+	}
+
 	@Override
 	public String toString() {
 		return "MainBoardListVo [boardNum=" + boardNum + ", memberNum=" + memberNum + ", place=" + place + ", content="
 				+ content + ", regdate=" + regdate + ", tripdate=" + tripdate + ", tdLikeCnt=" + tdLikeCnt
-				+ ", mainOrgFileName=" + mainOrgFileName + ", mainStoreFileName=" + mainStoreFileName + ", nickname="
-				+ nickname + ", profileOrgFileName=" + profileOrgFileName + ", profileStoreFileName="
-				+ profileStoreFileName + "]";
+				+ ", mainOrgFileName=" + mainOrgFileName + ", mainStoreFileName=" + mainStoreFileName
+				+ ", mainFileType=" + mainFileType + ", nickname=" + nickname + ", profileOrgFileName="
+				+ profileOrgFileName + ", profileStoreFileName=" + profileStoreFileName + ", profileFileType="
+				+ profileFileType + "]";
 	}
-	
+
 	
 	
 	

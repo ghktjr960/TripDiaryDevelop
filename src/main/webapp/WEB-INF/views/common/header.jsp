@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +49,12 @@
 					<div>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle " id="dropdown" data-toggle="dropdown">
-								<img alt="" src="resources/img/sample.png" class="border rounded-circle" style="width: 50px; height: 50px;">
+								<c:if test="${not empty profileImg}">
+									<img alt="" src="<spring:url value='/profile/${profileImg.storeFileName}.${profileImg.fileType}'/>" class="border rounded-circle" style="width: 50px; height: 50px;">
+								</c:if>
+								<c:if test="${empty profileImg}">
+									<img alt="" src="resources/img/profile_48.png" class="border rounded-circle" style="width: 50px; height: 50px;">
+								</c:if>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="dropdown">
 								<a class="dropdown-item" href="myPage">MyPage</a>

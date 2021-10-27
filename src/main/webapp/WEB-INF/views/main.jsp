@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,6 @@
 
 	<div class="container">
 		<h1>메인 페이지</h1>
-	
 	<c:choose>
 		<c:when test="${sort eq 'regdate'}">
 			<button onclick='location.href="/main?sort=regdate"'><b>작성일순</b></button>
@@ -53,8 +53,13 @@
 					<div class="board-top">
 						<div style="float: left;">
 							<!-- 프로필 이미지와 닉네임 -->
-							<img alt="" src="resources/img/sample.png" class="border rounded-circle" style="width: 50px; height: 50px; object-fit: cover;"> 
-							${mainBoardList.profileStoreFileName} / ${mainBoardList.nickname}
+							<c:if test="${mainBoardList.profileStoreFileName ne null}">
+								<img alt="" src="<spring:url value='/profile/${mainBoardList.profileStoreFileName}.${mainBoardList.profileFileType}'/>" class="border rounded-circle" style="width: 50px; height: 50px; object-fit: cover;"> 
+							</c:if>
+							<c:if test="${mainBoardList.profileStoreFileName eq null}">
+								<img alt="" src="resources/img/profile_48.png" class="border rounded-circle" style="width: 50px; height: 50px; object-fit: cover;"> 
+							</c:if>
+							${mainBoardList.nickname}
 						</div>
 						
 						<!-- pick 이미지 -->
@@ -99,10 +104,8 @@
 					<!-- 썸네일 이미지 -->
 					<div class="board-mid">
 						<a href="/board?boardNum=${mainBoardList.boardNum}">
-							<img class="image-thumbnail border border-secondary mt-3" src="resources/img/sampleMain.png" style="width: 100%;"> 
+							<img class="image-thumbnail border border-secondary mt-3" src="<spring:url value='/main/${mainBoardList.mainStoreFileName}.${mainBoardList.mainFileType}'/>" style="width: 100%;"> 
 						</a>
-						${mainBoardList.mainStoreFileName}<br>
-						${mainBoardList.boardNum}
 					</div>
 
 					<!-- 하단 정보부분 -->

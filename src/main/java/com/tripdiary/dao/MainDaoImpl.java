@@ -11,6 +11,7 @@ import com.tripdiary.controller.PickCmd;
 import com.tripdiary.vo.MainBoardListVo;
 import com.tripdiary.vo.MemberVo;
 import com.tripdiary.vo.PickVo;
+import com.tripdiary.vo.ProfileImgVo;
 import com.tripdiary.vo.TagVo;
 
 @Repository
@@ -55,6 +56,9 @@ public class MainDaoImpl implements MainDao{
 		sqlSession.insert("mainMapper.pickDelete", pickVo);
 	}
 	
-	
+	@Override
+	public ProfileImgVo profileImg(int memberNum) throws Exception {
+		return sqlSession.selectOne("mainMapper.profileImg", memberNum);
+	}
 	
 }

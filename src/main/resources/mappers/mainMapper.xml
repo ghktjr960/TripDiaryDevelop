@@ -23,10 +23,12 @@
  			A.tripdate, 
  			A.td_like_cnt, 
  			B.org_file_name as main_org_file_name, 
- 			B.store_file_name as main_store_file_name, 
+ 			B.store_file_name as main_store_file_name,
+ 			B.file_type as main_file_type, 
  			C.nickname,
  			D.org_file_name as profile_org_file_name, 
- 			D.store_file_name as profile_store_file_name
+ 			D.store_file_name as profile_store_file_name,
+ 			D.file_type as profile_file_type
 		from 
 			BOARD A, 
 			BOARD_IMG B, 
@@ -82,4 +84,9 @@
  	<delete id="pickDelete">
  		delete from pick where pick_num = #{pickNum} and member_num = #{memberNum} and board_num = #{boardNum}
  	</delete>
+ 	
+ 	<!-- 프로필정보 가져오기 -->
+ 	<select id="profileImg" parameterType="Integer" resultType="profileImgVo">
+ 		select * from profile_img where member_num = #{memberNum}
+ 	</select>
 </mapper>

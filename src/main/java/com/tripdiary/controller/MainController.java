@@ -20,6 +20,7 @@ import com.tripdiary.service.MainService;
 import com.tripdiary.vo.MainBoardListVo;
 import com.tripdiary.vo.MemberVo;
 import com.tripdiary.vo.PickVo;
+import com.tripdiary.vo.ProfileImgVo;
 import com.tripdiary.vo.TagVo;
 
 @Controller
@@ -53,6 +54,8 @@ public class MainController {
 			
 			List<MainBoardListVo> mainBoardList = mainService.mainBoardList(sort);
 			System.out.println(mainBoardList.toString());
+			
+			
 			model.addAttribute("mainBoardList", mainBoardList);
 			
 			List<TagVo> mainTagList = mainService.mainTagList();
@@ -66,9 +69,15 @@ public class MainController {
 				List<PickVo> mainPickList = mainService.mainPickList(memberVo.getMemberNum());
 				System.out.println(mainPickList.toString());
 				model.addAttribute("mainPickList", mainPickList);
+
+				// 프로필 사진 정보 가져올 DB : 세션에 저장된 회원번호로 사용
+				ProfileImgVo profileImgVo = mainService.profileImg(memberVo.getMemberNum());
+				System.out.println("profileImgVo : " + profileImgVo);
+				session.setAttribute("profileImg", profileImgVo);
+				
+				
 			}
 			// 세션 테스트용 코드 삭제해야됨 : 끝
-			
 			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
