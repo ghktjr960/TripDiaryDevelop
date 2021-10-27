@@ -76,7 +76,7 @@
 										</a>
 									</c:if>
 									<c:if test="${count eq null}">
-										<a href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}" >
+										<a href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}" onclick="alert('찜하기가 추가되었습니다.')">
 											<img alt="" src="resources/img/pick_basic_white.png" class="" style="width: 40px; height: 40px; object-fit: cover;">
 										</a>
 									</c:if>

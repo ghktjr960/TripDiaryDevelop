@@ -89,6 +89,7 @@ public class MainController {
 							 @RequestParam(value = "userPass", required = false) String password,
 							 HttpSession session) throws Exception {
 		
+		session.removeAttribute("sort");
 		MemberVo memberLoginTest = mainService.memberLoginTest(id);
 		
 		if(memberLoginTest.getPassword().equals(password)) {
@@ -150,11 +151,16 @@ public class MainController {
 	
 	// 게시글 상세보기할 때 사용할 코드 : 게시글 번호 날아오는거 확인완료
 	@RequestMapping(value = "/board", method = RequestMethod.GET)
-	public String zzz(@RequestParam(value = "boardNum", required = false) String boardNum ) {
+	public String board(@RequestParam(value = "boardNum", required = false) String boardNum ) {
 		System.out.println("boardNum : " + boardNum);
 		
 		return "redirect:/";
 	}
 	
+	// 에러페이지
+	@RequestMapping(value = "/pageError", method = RequestMethod.GET)
+	public String pageError(HttpServletResponse response, Model model) {
+		return "pageError";
+	}
 
 }

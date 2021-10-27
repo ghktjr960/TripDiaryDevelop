@@ -18,12 +18,12 @@
 				<li class="nav-item active">
 					<a class="nav-link" href="/main">Main</a>
 				</li>
-				<c:if test="${not empty sessionScope.id }">
+				<c:if test="${not empty memberLoginTest.id }">
 					<li class="nav-item active">
 						<a class="nav-link" href="/diary">MyDiary</a>
 					</li>
 				</c:if>
-				<c:if test="${not empty sessionScope.id }">
+				<c:if test="${not empty memberLoginTest.id }">
 					<li class="nav-item active">
 						<a class="nav-link" href="/pick">Pick!</a>
 					</li>
@@ -31,7 +31,7 @@
 				<li class="nav-item active">
 					<a class="nav-link" href="/about">About</a>
 				</li>
-				<c:if test="${not empty sessionScope.admin }">
+				<c:if test="${not empty memberLoginTest.admin }">
 					<li class="nav-item active">
 						<a class="nav-link" href="/admin">Adimin</a>
 					</li>
