@@ -8,13 +8,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/style.css" />
+	crossorigin="anonymous" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css" 
+	rel="stylesheet"/>
+	
 <title>Trip Diary</title>
 
 </head>
@@ -73,7 +73,6 @@
 
 
 		<!-- 전체 게시물 부분  -->
-		
 		<!-- 검색등으로 게시글에 대한 결과가 없을 경우 보여주는 화면 -->
 		<c:if test="${mainBoardList eq null}">
 			<div class="container">
@@ -107,13 +106,15 @@
 											class="border rounded-circle"
 											style="width: 50px; height: 50px; object-fit: cover;">
 									</c:if>
-									${mainBoardList.nickname}
+									<!-- 각 닉네임별 다이어리 페이지 이동 -->
+									<a href="#">
+										${mainBoardList.nickname}
+									</a>
 								</div>
 
 								<!-- pick 이미지 -->
 								<div style="float: right; display: inline-block;" class="">
 									<c:if test="${mainPickList ne null}">
-
 										<c:forEach items="${mainPickList}" var="mainPickList">
 											<c:if
 												test="${mainPickList.boardNum eq mainBoardList.boardNum }">
@@ -123,20 +124,17 @@
 												<c:set var="memberNum" value="${mainPickList.memberNum}"></c:set>
 											</c:if>
 										</c:forEach>
-
 										<c:if test="${count > 0 }">
-											<a
-												href="/pickClick?pickNum=${pickNum}&memberNum=${memberNum}&boardNum=${boardNum}"
-												onclick="alert('찜하기가 취소되었습니다.')"> <img alt=""
-												src="resources/img/pick_basic_dark.png" class=""
+											<a href="/pickClick?pickNum=${pickNum}&memberNum=${memberNum}&boardNum=${boardNum}"
+												onclick="alert('찜하기가 취소되었습니다.')"> 
+												<img alt="" src="resources/img/pick_basic_dark.png" class=""
 												style="width: 40px; height: 40px; object-fit: cover;">
 											</a>
 										</c:if>
 										<c:if test="${count eq null}">
-											<a
-												href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}"
-												onclick="alert('찜하기가 추가되었습니다.')"> <img alt=""
-												src="resources/img/pick_basic_white.png" class=""
+											<a href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}"
+												onclick="alert('찜하기가 추가되었습니다.')"> 
+												<img alt="" src="resources/img/pick_basic_white.png" class=""
 												style="width: 40px; height: 40px; object-fit: cover;">
 											</a>
 										</c:if>
@@ -149,8 +147,8 @@
 
 									<!-- 세션이 없는경우 로그인으로 유도 -->
 									<c:if test="${memberLoginTest eq null}">
-										<a href="/signIn" onclick="alert('로그인 후 사용가능합니다.')"> <img
-											alt="" src="resources/img/pick_basic_white.png" class=""
+										<a href="/signIn" onclick="alert('로그인 후 사용가능합니다.')"> 
+											<img alt="" src="resources/img/pick_basic_white.png" class=""
 											style="width: 40px; height: 40px; object-fit: cover;">
 										</a>
 									</c:if>
@@ -159,8 +157,8 @@
 
 							<!-- 썸네일 이미지 -->
 							<div class="board-mid">
-								<a href="/board?boardNum=${mainBoardList.boardNum}"> <img
-									class="image-thumbnail border border-secondary mt-3"
+								<a href="/board?boardNum=${mainBoardList.boardNum}"> 
+									<img class="image-thumbnail border border-secondary mt-3"
 									src="<spring:url value='/main/${mainBoardList.mainStoreFileName}.${mainBoardList.mainFileType}'/>"
 									style="width: 100%;">
 								</a>
@@ -169,20 +167,18 @@
 							<!-- 하단 정보부분 -->
 							<div class="board-bottom mt-5 mb-3">
 								<div>
-									여행날짜 :
-									<fmt:formatDate value="${mainBoardList.tripdate}"
-										pattern="yyyy-MM-dd" />
+									여행날짜 : <fmt:formatDate value="${mainBoardList.tripdate}" pattern="yyyy-MM-dd" />
 								</div>
-								<div>좋아요 ${mainBoardList.tdLikeCnt}개</div>
+								<div>
+									좋아요 ${mainBoardList.tdLikeCnt}개
+								</div>
 								<div>
 									<c:forEach items="${mainTagList}" var="mainTagList">
-										<c:if
-											test="${mainTagList.boardNum eq mainBoardList.boardNum }">
-										#${mainTagList.tag}
-									</c:if>
+										<c:if test="${mainTagList.boardNum eq mainBoardList.boardNum }">
+											#${mainTagList.tag}
+										</c:if>
 									</c:forEach>
 								</div>
-
 							</div>
 						</div>
 					</div>
@@ -214,16 +210,18 @@
 													class="border rounded-circle"
 													style="width: 50px; height: 50px; object-fit: cover;">
 											</c:if>
-											${mainBoardList.nickname}
+											
+											<!-- 닉네임별 다이어리 페이지로 이동 -->
+											<a href="#">
+												${mainBoardList.nickname}
+											</a>
 										</div>
 
 										<!-- pick 이미지 -->
 										<div style="float: right; display: inline-block;" class="">
 											<c:if test="${mainPickList ne null}">
-
 												<c:forEach items="${mainPickList}" var="mainPickList">
-													<c:if
-														test="${mainPickList.boardNum eq mainBoardList.boardNum }">
+													<c:if test="${mainPickList.boardNum eq mainBoardList.boardNum }">
 														<c:set var="count" value="${count+1}"></c:set>
 														<c:set var="pickNum" value="${mainPickList.pickNum}"></c:set>
 														<c:set var="boardNum" value="${mainPickList.boardNum}"></c:set>
@@ -232,16 +230,14 @@
 												</c:forEach>
 
 												<c:if test="${count > 0 }">
-													<a
-														href="/pickClick?pickNum=${pickNum}&memberNum=${memberNum}&boardNum=${boardNum}"
+													<a href="/pickClick?pickNum=${pickNum}&memberNum=${memberNum}&boardNum=${boardNum}"
 														onclick="alert('찜하기가 취소되었습니다.')"> <img alt=""
 														src="resources/img/pick_basic_dark.png" class=""
 														style="width: 40px; height: 40px; object-fit: cover;">
 													</a>
 												</c:if>
 												<c:if test="${count eq null}">
-													<a
-														href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}"
+													<a href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}"
 														onclick="alert('찜하기가 추가되었습니다.')"> <img alt=""
 														src="resources/img/pick_basic_white.png" class=""
 														style="width: 40px; height: 40px; object-fit: cover;">
@@ -251,13 +247,12 @@
 												<c:remove var="pickNum" />
 												<c:remove var="boardNum" />
 												<c:remove var="memberNum" />
-
 											</c:if>
 
 											<!-- 세션이 없는경우 로그인으로 유도 -->
 											<c:if test="${memberLoginTest eq null}">
-												<a href="/signIn" onclick="alert('로그인 후 사용가능합니다.')"> <img
-													alt="" src="resources/img/pick_basic_white.png" class=""
+												<a href="/signIn" onclick="alert('로그인 후 사용가능합니다.')"> 
+													<img alt="" src="resources/img/pick_basic_white.png" class=""
 													style="width: 40px; height: 40px; object-fit: cover;">
 												</a>
 											</c:if>
@@ -266,8 +261,8 @@
 
 									<!-- 썸네일 이미지 -->
 									<div class="board-mid">
-										<a href="/board?boardNum=${mainBoardList.boardNum}"> <img
-											class="image-thumbnail border border-secondary mt-3"
+										<a href="/board?boardNum=${mainBoardList.boardNum}"> 
+											<img class="image-thumbnail border border-secondary mt-3"
 											src="<spring:url value='/main/${mainBoardList.mainStoreFileName}.${mainBoardList.mainFileType}'/>"
 											style="width: 100%;">
 										</a>
@@ -276,20 +271,18 @@
 									<!-- 하단 정보부분 -->
 									<div class="board-bottom mt-5 mb-3">
 										<div>
-											여행날짜 :
-											<fmt:formatDate value="${mainBoardList.tripdate}"
-												pattern="yyyy-MM-dd" />
+											여행날짜 : <fmt:formatDate value="${mainBoardList.tripdate}" pattern="yyyy-MM-dd" />
 										</div>
-										<div>좋아요 ${mainBoardList.tdLikeCnt}개</div>
+										<div>
+											좋아요 ${mainBoardList.tdLikeCnt}개
+										</div>
 										<div>
 											<c:forEach items="${mainTagList}" var="mainTagList">
-												<c:if
-													test="${mainTagList.boardNum eq mainBoardList.boardNum }">
-										#${mainTagList.tag}
-									</c:if>
+												<c:if test="${mainTagList.boardNum eq mainBoardList.boardNum }">
+													#${mainTagList.tag}
+												</c:if>
 											</c:forEach>
 										</div>
-
 									</div>
 								</div>
 							</div>
