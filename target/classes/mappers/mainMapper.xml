@@ -39,19 +39,19 @@
 			and B.main_img = 1 
 			and A.member_num = C.member_num
 			and A.member_num = D.member_num
+		order by
 		<choose>
  			<when test='_parameter.equals("regdate")'>
- 				order by a.regdate desc, a.board_num desc
+ 				a.regdate desc, a.board_num desc
  			</when>
  			<when test='_parameter.equals("tripdate")'>
-	 			order by a.tripdate desc, a.regdate desc, a.board_num desc
+	 			a.tripdate desc, a.regdate desc, a.board_num desc
  			</when>
  			<when test='_parameter.equals("like")'>
- 				order by a.td_like_cnt desc, a.regdate desc, a.board_num desc
+ 				a.td_like_cnt desc, a.regdate desc, a.board_num desc
  			</when>
  			<otherwise></otherwise>
  		</choose>
- 		
  	</select>
  	
  	<!-- 찜하기도 가져와야됨 -->

@@ -1,6 +1,5 @@
 package com.tripdiary.controller;
 
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,7 +36,8 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String mainView(Model model, @RequestParam(value = "sort", required = false) String sort, HttpSession session) throws Exception {
+	public String mainView(Model model, @RequestParam(value = "sort", required = false) String sort,
+			HttpSession session) throws Exception {
 		
 		logger.info("main");
 		
@@ -150,10 +150,6 @@ public class MainController {
 			 */
 			
 		} else {
-			response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
-            out.flush();
 			return "redirect:/";
 		}
 	}
