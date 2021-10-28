@@ -5,13 +5,14 @@ import java.util.List;
 import com.tripdiary.controller.PickCmd;
 import com.tripdiary.vo.MainBoardListVo;
 import com.tripdiary.vo.MemberVo;
+import com.tripdiary.vo.PageVo;
 import com.tripdiary.vo.PickVo;
 import com.tripdiary.vo.ProfileImgVo;
 import com.tripdiary.vo.TagVo;
 
 public interface MainService {
 	
-	public List<MainBoardListVo> mainBoardList(String sort) throws Exception;
+	public List<MainBoardListVo> mainBoardList(PageVo pageVo) throws Exception;
 	
 	public List<TagVo> mainTagList() throws Exception;
 	
@@ -27,4 +28,6 @@ public interface MainService {
 	public void pickDelete(PickVo pickVo) throws Exception;
 	
 	public ProfileImgVo profileImg(int memberNum) throws Exception;
+	
+	public List<TagVo> tagSearch(PageVo pageVo) throws Exception;
 }

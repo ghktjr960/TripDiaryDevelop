@@ -10,6 +10,7 @@ import com.tripdiary.controller.PickCmd;
 import com.tripdiary.dao.MainDao;
 import com.tripdiary.vo.MainBoardListVo;
 import com.tripdiary.vo.MemberVo;
+import com.tripdiary.vo.PageVo;
 import com.tripdiary.vo.PickVo;
 import com.tripdiary.vo.ProfileImgVo;
 import com.tripdiary.vo.TagVo;
@@ -21,8 +22,8 @@ public class MainServiceImpl implements MainService{
 	private MainDao mainDao;
 	
 	@Override
-	public List<MainBoardListVo> mainBoardList(String sort) throws Exception {
-		return mainDao.mainBoardList(sort);
+	public List<MainBoardListVo> mainBoardList(PageVo pageVo) throws Exception {
+		return mainDao.mainBoardList(pageVo);
 	}
 	
 	@Override
@@ -59,5 +60,10 @@ public class MainServiceImpl implements MainService{
 	@Override
 	public ProfileImgVo profileImg(int memberNum) throws Exception {
 		return mainDao.profileImg(memberNum);
+	}
+	
+	@Override
+	public List<TagVo> tagSearch(PageVo pageVo) throws Exception {
+		return mainDao.tagSearch(pageVo);
 	}
 }

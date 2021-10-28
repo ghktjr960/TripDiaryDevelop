@@ -13,5 +13,6 @@
 			<typeAlias alias="pickVo" type="com.tripdiary.vo.PickVo"/>
 			<typeAlias alias="memberVo" type="com.tripdiary.vo.MemberVo"/>
 			<typeAlias alias="profileImgVo" type="com.tripdiary.vo.ProfileImgVo"/>
+			<typeAlias alias="pageVo" type="com.tripdiary.vo.PageVo"/>
 		</typeAliases>
 </configuration>

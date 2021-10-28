@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.tripdiary.controller.PickCmd;
 import com.tripdiary.vo.MainBoardListVo;
 import com.tripdiary.vo.MemberVo;
+import com.tripdiary.vo.PageVo;
 import com.tripdiary.vo.PickVo;
 import com.tripdiary.vo.ProfileImgVo;
 import com.tripdiary.vo.TagVo;
@@ -21,8 +22,8 @@ public class MainDaoImpl implements MainDao{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<MainBoardListVo> mainBoardList(String sort) throws Exception {
-		return sqlSession.selectList("mainMapper.mainBoardList", sort);
+	public List<MainBoardListVo> mainBoardList(PageVo pageVo) throws Exception {
+		return sqlSession.selectList("mainMapper.mainBoardList", pageVo);
 	}
 	
 	@Override
@@ -61,4 +62,8 @@ public class MainDaoImpl implements MainDao{
 		return sqlSession.selectOne("mainMapper.profileImg", memberNum);
 	}
 	
+	@Override
+	public List<TagVo> tagSearch(PageVo pageVo) throws Exception {
+		return sqlSession.selectList("mainMapper.tagSearch", pageVo);
+	}
 }

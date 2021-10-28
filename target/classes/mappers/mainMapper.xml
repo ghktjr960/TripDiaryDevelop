@@ -12,7 +12,7 @@
 	
 	
 	<!-- 게시글 가져오기 -->
- 	<select id="mainBoardList" parameterType="String" resultType="mainBoardListVo">
+ 	<select id="mainBoardList" parameterType="pageVo" resultType="mainBoardListVo">
  		<!-- order by a.regdate desc, a.board_num desc : 기본 정렬 => 작성일 순, 게시글 순 -->
  		select 
  			A.board_num, 
@@ -39,15 +39,19 @@
 			and B.main_img = 1 
 			and A.member_num = C.member_num
 			and A.member_num = D.member_num
+			<if test='place!=null and !place.equals("")'>
+				and A.place = #{place}
+			</if>
+			
 		order by
 		<choose>
- 			<when test='_parameter.equals("regdate")'>
+ 			<when test='sort.equals("regdate")'>
  				a.regdate desc, a.board_num desc
  			</when>
- 			<when test='_parameter.equals("tripdate")'>
+ 			<when test='sort.equals("tripdate")'>
 	 			a.tripdate desc, a.regdate desc, a.board_num desc
  			</when>
- 			<when test='_parameter.equals("like")'>
+ 			<when test='sort.equals("like")'>
  				a.td_like_cnt desc, a.regdate desc, a.board_num desc
  			</when>
  			<otherwise></otherwise>
@@ -89,4 +93,11 @@
  	<select id="profileImg" parameterType="Integer" resultType="profileImgVo">
  		select * from profile_img where member_num = #{memberNum}
  	</select>
+ 	
+ 	<!-- 태그검색하는 정보가져오기 -->
+ 	<select id="tagSearch" parameterType="pageVo" resultType="tagVo">
+ 		select * from tag where tag LIKE '%'||#{tag}||'%'
+ 	</select>
+ 	
+ 	
 </mapper>
