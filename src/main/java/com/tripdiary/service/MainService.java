@@ -30,4 +30,7 @@ public interface MainService {
 	public ProfileImgVo profileImg(int memberNum) throws Exception;
 	
 	public List<TagVo> tagSearch(PageVo pageVo) throws Exception;
+
+	// 게시글 총 갯수
+	public int listCount() throws Exception;	
 }

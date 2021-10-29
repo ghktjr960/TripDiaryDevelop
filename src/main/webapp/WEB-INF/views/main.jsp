@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -182,7 +182,7 @@
 												</c:when>
 												<c:otherwise>
 													<a href="/main?place=${place}&tag=${mainTagList.tag}">
-														#${mainTagList.tag}
+														#${mainTagList.tag} &nbsp;
 													</a>
 												</c:otherwise>
 											</c:choose>
@@ -213,117 +213,153 @@
 			<div class="diary-mid row mt-5 mb-5">
 				<c:forEach items="${mainBoardList}" var="mainBoardList">
 					<c:forEach items="${tagSearch}" var="tagSearch">
-						<c:if test="${tagSearch.boardNum eq mainBoardList.boardNum }">
-
-							<!-- 게시물 1개 부분 이 주석 밑부분 부터 반복문 실행-->
-							<div class="col-sm-4 diary-board-container">
-								<div class="border border-secondary p-3 icon2">
-									<div class="board-top">
-										<div style="float: left;">
-											<!-- 프로필 이미지와 닉네임 -->
-											<c:if test="${mainBoardList.profileStoreFileName ne null}">
-												<img alt=""
-													src="<spring:url value='/profile/${mainBoardList.profileStoreFileName}.${mainBoardList.profileFileType}'/>"
-													class="border rounded-circle"
-													style="width: 50px; height: 50px; object-fit: cover;">
-											</c:if>
-											<c:if test="${mainBoardList.profileStoreFileName eq null}">
-												<img alt="" src="resources/img/profile_48.png"
-													class="border rounded-circle"
-													style="width: 50px; height: 50px; object-fit: cover;">
-											</c:if>
-											
-											<!-- 닉네임별 다이어리 페이지로 이동 -->
-											<a href="#">
-												${mainBoardList.nickname}
+							<c:if test="${tagSearch.boardNum eq mainBoardList.boardNum }">
+								<c:set var="tagSearchCheck" value="${tagSearchCheck+1}"></c:set>
+								<!-- 게시물 1개 부분 이 주석 밑부분 부터 반복문 실행-->
+								<div class="col-sm-4 diary-board-container">
+									<div class="border border-secondary p-3 icon2">
+										<div class="board-top">
+											<div style="float: left;">
+												<!-- 프로필 이미지와 닉네임 -->
+												<c:if test="${mainBoardList.profileStoreFileName ne null}">
+													<img alt=""
+														src="<spring:url value='/profile/${mainBoardList.profileStoreFileName}.${mainBoardList.profileFileType}'/>"
+														class="border rounded-circle"
+														style="width: 50px; height: 50px; object-fit: cover;">
+												</c:if>
+												<c:if test="${mainBoardList.profileStoreFileName eq null}">
+													<img alt="" src="resources/img/profile_48.png"
+														class="border rounded-circle"
+														style="width: 50px; height: 50px; object-fit: cover;">
+												</c:if>
+												
+												<!-- 닉네임별 다이어리 페이지로 이동 -->
+												<a href="#">
+													${mainBoardList.nickname}
+												</a>
+											</div>
+	
+											<!-- pick 이미지 -->
+											<div style="float: right; display: inline-block;" class="">
+												<c:if test="${mainPickList ne null}">
+													<c:forEach items="${mainPickList}" var="mainPickList">
+														<c:if test="${mainPickList.boardNum eq mainBoardList.boardNum }">
+															<c:set var="count" value="${count+1}"></c:set>
+															<c:set var="pickNum" value="${mainPickList.pickNum}"></c:set>
+															<c:set var="boardNum" value="${mainPickList.boardNum}"></c:set>
+															<c:set var="memberNum" value="${mainPickList.memberNum}"></c:set>
+														</c:if>
+													</c:forEach>
+	
+													<c:if test="${count > 0 }">
+														<a href="/pickClick?pickNum=${pickNum}&memberNum=${memberNum}&boardNum=${boardNum}"
+															onclick="alert('찜하기가 취소되었습니다.')"> <img alt=""
+															src="resources/img/pick_basic_dark.png" class=""
+															style="width: 40px; height: 40px; object-fit: cover;">
+														</a>
+													</c:if>
+													<c:if test="${count eq null}">
+														<a href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}"
+															onclick="alert('찜하기가 추가되었습니다.')"> <img alt=""
+															src="resources/img/pick_basic_white.png" class=""
+															style="width: 40px; height: 40px; object-fit: cover;">
+														</a>
+													</c:if>
+													<c:remove var="count" />
+													<c:remove var="pickNum" />
+													<c:remove var="boardNum" />
+													<c:remove var="memberNum" />
+												</c:if>
+	
+												<!-- 세션이 없는경우 로그인으로 유도 -->
+												<c:if test="${memberLoginTest eq null}">
+													<a href="/signIn" onclick="alert('로그인 후 사용가능합니다.')"> 
+														<img alt="" src="resources/img/pick_basic_white.png" class=""
+														style="width: 40px; height: 40px; object-fit: cover;">
+													</a>
+												</c:if>
+											</div>
+										</div>
+	
+										<!-- 썸네일 이미지 -->
+										<div class="board-mid">
+											<a href="/board?boardNum=${mainBoardList.boardNum}"> 
+												<img class="image-thumbnail border border-secondary mt-3"
+												src="<spring:url value='/main/${mainBoardList.mainStoreFileName}.${mainBoardList.mainFileType}'/>"
+												style="width: 100%;">
 											</a>
 										</div>
-
-										<!-- pick 이미지 -->
-										<div style="float: right; display: inline-block;" class="">
-											<c:if test="${mainPickList ne null}">
-												<c:forEach items="${mainPickList}" var="mainPickList">
-													<c:if test="${mainPickList.boardNum eq mainBoardList.boardNum }">
-														<c:set var="count" value="${count+1}"></c:set>
-														<c:set var="pickNum" value="${mainPickList.pickNum}"></c:set>
-														<c:set var="boardNum" value="${mainPickList.boardNum}"></c:set>
-														<c:set var="memberNum" value="${mainPickList.memberNum}"></c:set>
+	
+										<!-- 하단 정보부분 -->
+										<div class="board-bottom mt-5 mb-3">
+											<div>
+												여행날짜 : <fmt:formatDate value="${mainBoardList.tripdate}" pattern="yyyy-MM-dd" />
+											</div>
+											<div>
+												좋아요 ${mainBoardList.tdLikeCnt}개
+											</div>
+											<div>
+												<c:forEach items="${mainTagList}" var="mainTagList">
+													<c:if test="${mainTagList.boardNum eq mainBoardList.boardNum }">
+														<c:choose>
+															<c:when test="${place eq null}">
+																<a href="/main?tag=${mainTagList.tag}">
+																	#${mainTagList.tag}
+																</a>
+															</c:when>
+															<c:otherwise>
+																<a href="/main?place=${place}&tag=${mainTagList.tag}">
+																	#${mainTagList.tag} 
+																</a>
+															</c:otherwise>
+														</c:choose>												
 													</c:if>
 												</c:forEach>
-
-												<c:if test="${count > 0 }">
-													<a href="/pickClick?pickNum=${pickNum}&memberNum=${memberNum}&boardNum=${boardNum}"
-														onclick="alert('찜하기가 취소되었습니다.')"> <img alt=""
-														src="resources/img/pick_basic_dark.png" class=""
-														style="width: 40px; height: 40px; object-fit: cover;">
-													</a>
-												</c:if>
-												<c:if test="${count eq null}">
-													<a href="/pickClick?memberNum=${memberLoginTest.memberNum}&boardNum=${mainBoardList.boardNum}"
-														onclick="alert('찜하기가 추가되었습니다.')"> <img alt=""
-														src="resources/img/pick_basic_white.png" class=""
-														style="width: 40px; height: 40px; object-fit: cover;">
-													</a>
-												</c:if>
-												<c:remove var="count" />
-												<c:remove var="pickNum" />
-												<c:remove var="boardNum" />
-												<c:remove var="memberNum" />
-											</c:if>
-
-											<!-- 세션이 없는경우 로그인으로 유도 -->
-											<c:if test="${memberLoginTest eq null}">
-												<a href="/signIn" onclick="alert('로그인 후 사용가능합니다.')"> 
-													<img alt="" src="resources/img/pick_basic_white.png" class=""
-													style="width: 40px; height: 40px; object-fit: cover;">
-												</a>
-											</c:if>
-										</div>
-									</div>
-
-									<!-- 썸네일 이미지 -->
-									<div class="board-mid">
-										<a href="/board?boardNum=${mainBoardList.boardNum}"> 
-											<img class="image-thumbnail border border-secondary mt-3"
-											src="<spring:url value='/main/${mainBoardList.mainStoreFileName}.${mainBoardList.mainFileType}'/>"
-											style="width: 100%;">
-										</a>
-									</div>
-
-									<!-- 하단 정보부분 -->
-									<div class="board-bottom mt-5 mb-3">
-										<div>
-											여행날짜 : <fmt:formatDate value="${mainBoardList.tripdate}" pattern="yyyy-MM-dd" />
-										</div>
-										<div>
-											좋아요 ${mainBoardList.tdLikeCnt}개
-										</div>
-										<div>
-											<c:forEach items="${mainTagList}" var="mainTagList">
-												<c:if test="${mainTagList.boardNum eq mainBoardList.boardNum }">
-													<c:choose>
-														<c:when test="${place eq null}">
-															<a href="/main?tag=${mainTagList.tag}">
-																#${mainTagList.tag}
-															</a>
-														</c:when>
-														<c:otherwise>
-															<a href="/main?place=${place}&tag=${mainTagList.tag}">
-																#${mainTagList.tag}
-															</a>
-														</c:otherwise>
-													</c:choose>												
-												</c:if>
-											</c:forEach>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</c:if>
+							</c:if>
 					</c:forEach>
 				</c:forEach>
 			</div>
+			
+			<!-- 지역, 태그 검색결과가 없을 때 보여주는 화면 -->
+			<c:if test="${mainBoardList ne null && tagSearchCheck eq null}">
+				<div class="container">
+					<div class="container">
+						<img alt="" src="resources/img/error.png" style="width: 30%;">
+					</div>
+					<div class="container">
+						<h1>등록된 글이 없습니다.</h1>
+					</div>
+				</div>
+			</c:if>
 		</c:if>
+		
+		<!-- 페이징 처리 코드 봉인
+		<div class="col-md-offset-3">
+			<ul class="container">
+				<c:if test="${paging.startPage != 1}">
+					<a href="/main?page=${paging.startPage - 1}">&lt;</a>
+				</c:if>
+				<c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
+					<c:choose>
+						<c:when test="${i == paging.page}">
+							<b>[${i}]</b>
+						</c:when>
+						<c:when test="${i != paging.page}">
+							<a href="/main?page=${i}">${i}</a>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<a href="/main?page=${paging.endPage + 1}">&gt;</a>
+				</c:if>
+			</ul>		
+		</div>
+		 -->
+		
 	</div>
 
 	<jsp:include page="common/sidebar.jsp" flush="false" />

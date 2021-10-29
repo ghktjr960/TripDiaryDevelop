@@ -23,7 +23,6 @@ public class PickController {
 	@Inject
 	private MainService mainService;	
 	
-	
 	// 찜하기 버튼을 눌렀을 때 작동되는 코드
 	@RequestMapping(value = "/pickClick", method = RequestMethod.GET)
 	public String pickClick(PickVo pickVo, HttpServletRequest request, 
@@ -67,4 +66,10 @@ public class PickController {
 			return "redirect:/";
 		}
 	}
+	
+	@RequestMapping(value = "/pick", method = RequestMethod.GET)
+	public String pick() {
+		return "pick";
+	}
+	
 }

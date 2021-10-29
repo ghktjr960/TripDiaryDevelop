@@ -66,4 +66,9 @@ public class MainServiceImpl implements MainService{
 	public List<TagVo> tagSearch(PageVo pageVo) throws Exception {
 		return mainDao.tagSearch(pageVo);
 	}
+	
+	@Override
+	public int listCount() throws Exception {
+		return mainDao.listCount();
+	}
 }

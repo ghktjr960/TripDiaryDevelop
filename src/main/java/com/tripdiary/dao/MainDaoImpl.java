@@ -66,4 +66,9 @@ public class MainDaoImpl implements MainDao{
 	public List<TagVo> tagSearch(PageVo pageVo) throws Exception {
 		return sqlSession.selectList("mainMapper.tagSearch", pageVo);
 	}
+	
+	@Override
+	public int listCount() throws Exception {
+		return sqlSession.selectOne("mainMapper.listCount");
+	}
 }

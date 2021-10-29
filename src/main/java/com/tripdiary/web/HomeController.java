@@ -19,11 +19,7 @@ public class HomeController {
 	public String diary() {
 		return "diary";
 	}
-	
-	@RequestMapping(value = "/pick", method = RequestMethod.GET)
-	public String pick() {
-		return "pick";
-	}
+
 	
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String about() {

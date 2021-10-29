@@ -3,8 +3,6 @@ package com.tripdiary.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tripdiary.service.MainService;
 import com.tripdiary.vo.MainBoardListVo;
@@ -71,11 +68,13 @@ public class MainController {
 			if(pageVo.getTag() != null && !pageVo.getTag().equals("")) {
 				List<TagVo> tagSearch = mainService.tagSearch(pageVo);
 				if(tagSearch.isEmpty()) {
-					// tag검색을 테이블을 따로 사용하기 때문에 검색어가 없을 경우, 검색결과가 없을 때에도 tagSearch은 model에 담기는 값이 없어 null로만 비교하기에는 무리이다.
-					// tagNoSearchResult를 추가하여 jsp에서 tagSearch가 null이고 tagNoSearchResult이 'tagNoSearchResult'일때를 감지하여 화면을 보여준다.
-					// Model tagSearch하나만 사용하면 검색결과가 있을 경우 없을 경우 null인지 아닌지로 구분이 힘듬
-					// jsp에서 empty로 검사하는것과 null로 검사하는 것과 동일한 결과를 가져온다.
-					// ${tagSearch eq null} == ${empty tagSearch}
+					/* 
+					 * tag검색을 테이블을 따로 사용하기 때문에 검색어가 없을 경우, 검색결과가 없을 때에도 tagSearch은 model에 담기는 값이 없어 null로만 비교하기에는 무리이다.
+					 * tagNoSearchResult를 추가하여 jsp에서 tagSearch가 null이고 tagNoSearchResult이 'tagNoSearchResult'일때를 감지하여 화면을 보여준다.
+					 * Model tagSearch하나만 사용하면 검색결과가 있을 경우 없을 경우 null인지 아닌지로 구분이 힘듬
+					 * jsp에서 empty로 검사하는것과 null로 검사하는 것과 동일한 결과를 가져온다.
+					 *  ${tagSearch eq null} == ${empty tagSearch}
+					 */
 					model.addAttribute("tagSearch", null);
 					model.addAttribute("tagNoSearchResult", "tagNoSearchResult");
 					System.out.println("tagSearch 내용 없음");
@@ -84,6 +83,18 @@ public class MainController {
 					System.out.println(tagSearch.toString());
 				}
 			}
+			
+	 		/* 
+	 		 * 페이징 처리
+	 		 * 
+	 		 * int total = mainService.listCount();
+			 *	if(pageVo.getPage() == null) {
+			 *		pageVo.setPage(1);
+			 *	}
+			 * 	pageVo = new PageVo(pageVo.getSort(), pageVo.getPlace(), pageVo.getTag(), total, pageVo.getPage());
+		 	 *	System.out.println("pageVo toSting" + pageVo.toString());
+			 *	model.addAttribute("paging", pageVo);
+			 */
 
 			// 메인페이지에서 보여줄 게시글들을 가져옴 : sort값과 place값을 사용
 			// 검색시 sort와 place는 하나에 쿼리에서 사용이 가능하지만 tag는 따로 테이블에 요청해 값을 가져와 if문을 사용해 비교해준다.
@@ -117,10 +128,11 @@ public class MainController {
 				ProfileImgVo profileImgVo = mainService.profileImg(memberVo.getMemberNum());
 				System.out.println("profileImgVo : " + profileImgVo);
 				session.setAttribute("profileImg", profileImgVo);
-				
-				
 			}
 			// 세션 테스트용 코드 삭제해야됨 : 끝
+
+			
+			
 			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

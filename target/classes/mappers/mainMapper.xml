@@ -10,7 +10,6 @@
 	 	2.이름 맞추기 VO = DB
 	 -->
 	
-	
 	<!-- 게시글 가져오기 -->
  	<select id="mainBoardList" parameterType="pageVo" resultType="mainBoardListVo">
  		<!-- order by a.regdate desc, a.board_num desc : 기본 정렬 => 작성일 순, 게시글 순 -->
@@ -58,6 +57,80 @@
  		</choose>
  	</select>
  	
+ 	<!-- 페이징 처리 쿼리문 봉인 
+ 	<select id="mainBoardList" parameterType="pageVo" resultType="mainBoardListVo">
+ 	-->
+ 		<!-- order by a.regdate desc, a.board_num desc : 기본 정렬 => 작성일 순, 게시글 순 -->
+		<!-- 
+ 		select 
+ 			B.RNUM,
+            B.board_num, 
+ 			B.member_num, 
+ 			B.place, 
+ 			B.content, 
+ 			B.regdate, 
+ 			B.tripdate, 
+ 			B.td_like_cnt, 
+ 			C.org_file_name as main_org_file_name, 
+ 			C.store_file_name as main_store_file_name,
+ 			C.file_type as main_file_type, 
+ 			D.nickname,
+ 			E.org_file_name as profile_org_file_name, 
+ 			E.store_file_name as profile_store_file_name,
+ 			E.file_type as profile_file_type
+		from 
+            (select 
+                ROWNUM as RNUM,
+                A.board_num, 
+                A.member_num, 
+                A.place, 
+                A.content, 
+                A.regdate, 
+                A.tripdate, 
+                A.td_like_cnt
+            from 
+                (select
+                    board_num, 
+                    member_num, 
+                    place, 
+                    content, 
+                    regdate, 
+                    tripdate, 
+                    td_like_cnt
+                from
+                    BOARD
+                order by
+                    <choose>
+                        <when test='sort.equals("regdate")'>
+                            regdate desc, board_num desc
+                        </when>
+                        <when test='sort.equals("tripdate")'>
+                            tripdate desc, regdate desc, board_num desc
+                        </when>
+                        <when test='sort.equals("like")'>
+                            td_like_cnt desc, regdate desc, board_num desc
+                        </when>
+                        <otherwise></otherwise>
+                    </choose>
+                )A
+            where 
+                <![CDATA[ROWNUM <= #{endRnum}]]>
+			)B,
+            BOARD_IMG C, 
+			MEMBER D,
+			PROFILE_IMG E
+		where 
+			B.board_num = C.board_num 
+			and C.main_img = 1 
+			and B.member_num = D.member_num
+			and B.member_num = E.member_num
+            <if test='place!=null and !place.equals("")'>
+				and B.place = #{place}
+			</if>
+            <![CDATA[and B.rnum >= #{startRnum}]]>
+ 	</select>
+		 -->
+ 	
  	<!-- 찜하기도 가져와야됨 -->
  	<select id="mainPickList" parameterType="Integer" resultType="pickVo">
  		select * from pick where member_num = #{memberNum}
@@ -99,5 +172,9 @@
  		select * from tag where tag LIKE '%'||#{tag}||'%'
  	</select>
  	
+ 	<!-- 게시글 전체 갯수 가져오기 -->
+	<select id="listCount" resultType="int">
+		<![CDATA[select count(BOARD_NUM) from BOARD where BOARD_NUM > 0]]>
+	</select>
  	
 </mapper>
