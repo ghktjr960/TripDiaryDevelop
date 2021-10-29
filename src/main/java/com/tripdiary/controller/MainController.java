@@ -56,7 +56,7 @@ public class MainController {
 				// 새로운 정렬값이 들어왔을 때
 				session.setAttribute("sort",  pageVo.getSort());
 			}
-			
+
 			// pageVo값이 어떤게 들어왔는지 확인하기 위해 사용
 			System.out.println("sort : " +  pageVo.getSort());
 			System.out.println("place : " +  pageVo.getPlace());
@@ -66,25 +66,27 @@ public class MainController {
 			session.setAttribute("place",  pageVo.getPlace());
 			session.setAttribute("tag",  pageVo.getTag());
 			
-			
 			// tag검색을 통해 TagVo에 해당하는 정보를 가져온다.
 			// tag검색을 통해 가져온 TagVo에 있는 boardNum으로 검색결과를 나타낸다.
 			if(pageVo.getTag() != null && !pageVo.getTag().equals("")) {
 				List<TagVo> tagSearch = mainService.tagSearch(pageVo);
 				if(tagSearch.isEmpty()) {
+					// tag검색을 테이블을 따로 사용하기 때문에 검색어가 없을 경우, 검색결과가 없을 때에도 tagSearch은 model에 담기는 값이 없어 null로만 비교하기에는 무리이다.
+					// tagNoSearchResult를 추가하여 jsp에서 tagSearch가 null이고 tagNoSearchResult이 'tagNoSearchResult'일때를 감지하여 화면을 보여준다.
 					model.addAttribute("tagSearch", null);
+					model.addAttribute("tagNoSearchResult", "tagNoSearchResult");
 					System.out.println("tagSearch 내용 없음");
 				} else {
 					model.addAttribute("tagSearch", tagSearch);
 					System.out.println(tagSearch.toString());
 				}
 			}
-			
+
 			// 메인페이지에서 보여줄 게시글들을 가져옴 : sort값과 place값을 사용
 			// 검색시 sort와 place는 하나에 쿼리에서 사용이 가능하지만 tag는 따로 테이블에 요청해 값을 가져와 if문을 사용해 비교해준다.
 			List<MainBoardListVo> mainBoardList = mainService.mainBoardList(pageVo);
 			
-			// 만약 검색 등으로 게시글 결과가 존재하지 않을 경우를 파악하기 위해 사용
+			// 게시글 결과가 존재하지 않을 경우를 파악하기 위해 사용
 			if(mainBoardList.isEmpty()) {
 				model.addAttribute("mainBoardList", null);
 				System.out.println("mainBoardList 내용 없음");
@@ -92,7 +94,7 @@ public class MainController {
 				model.addAttribute("mainBoardList", mainBoardList);
 				System.out.println(mainBoardList.toString());
 			}
-
+			
 			// 메인페이지에서 게시글을 보여줄 때 사용하기 위한 태그결과이다.
 			// 각 게시글 마다 회원 닉네임, 게시글 정보, 태그등을 보여주는데 사용하는 코드
 			List<TagVo> mainTagList = mainService.mainTagList();
