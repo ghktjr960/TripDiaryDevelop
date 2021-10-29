@@ -73,6 +73,9 @@ public class MainController {
 				if(tagSearch.isEmpty()) {
 					// tag검색을 테이블을 따로 사용하기 때문에 검색어가 없을 경우, 검색결과가 없을 때에도 tagSearch은 model에 담기는 값이 없어 null로만 비교하기에는 무리이다.
 					// tagNoSearchResult를 추가하여 jsp에서 tagSearch가 null이고 tagNoSearchResult이 'tagNoSearchResult'일때를 감지하여 화면을 보여준다.
+					// Model tagSearch하나만 사용하면 검색결과가 있을 경우 없을 경우 null인지 아닌지로 구분이 힘듬
+					// jsp에서 empty로 검사하는것과 null로 검사하는 것과 동일한 결과를 가져온다.
+					// ${tagSearch eq null} == ${empty tagSearch}
 					model.addAttribute("tagSearch", null);
 					model.addAttribute("tagNoSearchResult", "tagNoSearchResult");
 					System.out.println("tagSearch 내용 없음");
@@ -127,92 +130,4 @@ public class MainController {
 		return "main";
 	}
 	
-	// 세션 확인용 로그인 테스트 코드 : 삭제해야됨 : 시작
-	@RequestMapping(value = "/signIn", method = RequestMethod.GET)
-	public String signInGet() {
-		return "signIn";
-	}
-	
-	@RequestMapping(value = "/signIn", method = RequestMethod.POST)
-	public String signInPost(@RequestParam(value = "userId", required = false) String id,
-							 @RequestParam(value = "userPass", required = false) String password,
-							 HttpSession session) throws Exception {
-		
-		// 로그인 시 검색결과, 정렬결과를 초기화하기 위한 작업
-		session.removeAttribute("sort");
-		session.removeAttribute("place");
-		session.removeAttribute("tag");
-		MemberVo memberLoginTest = mainService.memberLoginTest(id);
-		
-		if(memberLoginTest.getPassword().equals(password)) {
-			session.setAttribute("memberLoginTest", memberLoginTest);
-			return "redirect:/main";
-		} else {
-			return "signIn";
-		}
-	}
-	@RequestMapping(value = "/signOut", method = RequestMethod.GET)
-	public String signOutGet(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
-	}
-	// 세션 확인용 로그인 테스트 코드 : 삭제해야됨 : 끝
-
-	// 찜하기 버튼을 눌렀을 때 작동되는 코드
-	@RequestMapping(value = "/pickClick", method = RequestMethod.GET)
-	public String pickClick(PickVo pickVo, HttpServletRequest request, 
-			HttpServletResponse response, HttpSession session) throws Exception {
-		
-		// pickVo에 해당하는 데이터확인
-		System.out.println("pickVo : " + pickVo.toString());
-		
-		// 로그인 상태에서만 동작 : 세션검사
-		MemberVo memberVo = (MemberVo) session.getAttribute("memberLoginTest");		
-		if(memberVo != null && memberVo.getMemberNum() == pickVo.getMemberNum()) {
-			// 회원이 로그인된 상태이고 로그인한 회원과 찜하기를 누른 회원이 같은지 검사 후 같다면 동작
-			System.out.println(memberVo.toString());
-			
-			// 찜하기를 눌렀을 때 해당 게시글의 찜하기가 되어 있는지 확인하는 과정
-			// 찜하기를 눌렀을 때 가져온 정보를 사용해 pick테이블에 정보를 확인하여 찜하기를 했는지 안했는지 검사
-			// 만약 pick테이블에서 가져오는 정보가 없다면 찜하기를 누르지 않은 상태이고
-			// 만약 pick테이블에서 가져오는 정보가 있다면 찜하기를 누른 상태이다.
-			PickVo pickCheck = mainService.pickCheck(pickVo);
-			if(pickCheck == null) {
-				// 테이블에 데이터가 없을 경우 : pick테이블에 찜하기를 눌렀다는 의미로 데이터를 저장
-				PickCmd pickcmd = new PickCmd(pickVo.getMemberNum(), pickVo.getBoardNum());
-				mainService.pickInsert(pickcmd);
-				return "redirect:/";
-			} else {
-				// 테이블에 데이터가 있을 경우 : pick테이블에 찜하기를 취소했다는 의미로 데이터를 삭제
-				mainService.pickDelete(pickCheck);
-				return "redirect:/";
-			}
-			
-			/*
-			 * 쿼리문
-			 * select * from pick where pick_num = ${pickNum} and member_num = ${memberNum}
-			 * 1. if : 테이블에 없을 경우 : null이면 insert
-			 * 2. if : 테이블에 있을 경우 : not null이면 delete
-			 * 
-			 */
-			
-		} else {
-			// 로그인 상태가 아닐 경우 아무런 동작을 하지 않는다.
-			return "redirect:/";
-		}
-	}
-	
-	// 게시글 상세보기할 때 사용할 코드 : 게시글 번호 날아오는거 확인완료
-	@RequestMapping(value = "/board", method = RequestMethod.GET)
-	public String board(@RequestParam(value = "boardNum", required = false) String boardNum ) {
-		System.out.println("boardNum : " + boardNum);
-		return "redirect:/";
-	}
-	
-	// 에러페이지
-	@RequestMapping(value = "/pageError", method = RequestMethod.GET)
-	public String pageError(HttpServletResponse response, Model model) {
-		return "pageError";
-	}
-
 }
