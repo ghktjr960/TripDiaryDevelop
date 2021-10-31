@@ -41,7 +41,6 @@
 			<if test='place!=null and !place.equals("")'>
 				and A.place = #{place}
 			</if>
-			
 		order by
 		<choose>
  			<when test='sort.equals("regdate")'>
@@ -176,5 +175,18 @@
 	<select id="listCount" resultType="int">
 		<![CDATA[select count(BOARD_NUM) from BOARD where BOARD_NUM > 0]]>
 	</select>
+ 	
+ 	<!-- pick눌렀을 때 member_act_cnt 업데이트-->
+ 	<update id="memberActCntPick">
+ 		update member_act_cnt set PICK_PRESS_CNT =
+ 		<choose>
+ 			<when test='updateType.equals("insert")'>
+		 		 PICK_PRESS_CNT+1 where member_num = #{memberNum}
+ 			</when>
+ 			<when test='updateType.equals("delete")'>
+		 		 PICK_PRESS_CNT-1 where member_num = #{memberNum}
+ 			</when>
+ 		</choose>
+ 	</update>
  	
 </mapper>

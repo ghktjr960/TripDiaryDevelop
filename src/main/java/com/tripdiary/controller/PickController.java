@@ -37,19 +37,32 @@ public class PickController {
 			// 회원이 로그인된 상태이고 로그인한 회원과 찜하기를 누른 회원이 같은지 검사 후 같다면 동작
 			System.out.println(memberVo.toString());
 			
-			// 찜하기를 눌렀을 때 해당 게시글의 찜하기가 되어 있는지 확인하는 과정
-			// 찜하기를 눌렀을 때 가져온 정보를 사용해 pick테이블에 정보를 확인하여 찜하기를 했는지 안했는지 검사
-			// 만약 pick테이블에서 가져오는 정보가 없다면 찜하기를 누르지 않은 상태이고
-			// 만약 pick테이블에서 가져오는 정보가 있다면 찜하기를 누른 상태이다.
+			/*
+				 찜하기를 눌렀을 때 해당 게시글의 찜하기가 되어 있는지 확인하는 과정
+				 찜하기를 눌렀을 때 가져온 정보를 사용해 pick테이블에 정보를 확인하여 찜하기를 했는지 안했는지 검사
+				 만약 pick테이블에서 가져오는 정보가 없다면 찜하기를 누르지 않은 상태이고
+				 만약 pick테이블에서 가져오는 정보가 있다면 찜하기를 누른 상태이다.
+			 */
 			PickVo pickCheck = mainService.pickCheck(pickVo);
+			String updateType = null;
+			// mybatis에서 updateQuery를 받아 insert면 +1 delete면 -1해줘야됨
+
+			PickCmd pickCmd = null;
+			System.out.println("pickCheck : " + pickCheck);
+			
 			if(pickCheck == null) {
-				// 테이블에 데이터가 없을 경우 : pick테이블에 찜하기를 눌렀다는 의미로 데이터를 저장
-				PickCmd pickcmd = new PickCmd(pickVo.getMemberNum(), pickVo.getBoardNum());
-				mainService.pickInsert(pickcmd);
+				// 테이블에 데이터가 없을 경우 : pick테이블에 찜하기를 눌렀다는 의미로 데이터를 저장, member_act_cnt + 1
+				updateType = "insert";
+				pickCmd = new PickCmd(pickVo.getMemberNum(), pickVo.getBoardNum(), updateType);
+				mainService.pickInsert(pickCmd);
+				mainService.memberActCntPick(pickCmd);
 				return "redirect:/";
 			} else {
-				// 테이블에 데이터가 있을 경우 : pick테이블에 찜하기를 취소했다는 의미로 데이터를 삭제
+				// 테이블에 데이터가 있을 경우 : pick테이블에 찜하기를 취소했다는 의미로 데이터를 삭제, member_act_cnt - 1
+				updateType = "delete";
+				pickCmd = new PickCmd(pickCheck.getMemberNum(), pickCheck.getBoardNum(), updateType);
 				mainService.pickDelete(pickCheck);
+				mainService.memberActCntPick(pickCmd);
 				return "redirect:/";
 			}
 			

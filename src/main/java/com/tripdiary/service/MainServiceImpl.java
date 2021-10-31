@@ -71,4 +71,9 @@ public class MainServiceImpl implements MainService{
 	public int listCount() throws Exception {
 		return mainDao.listCount();
 	}
+	
+	@Override
+	public void memberActCntPick(PickCmd pickCmd) throws Exception {
+		mainDao.memberActCntPick(pickCmd);
+	}
 }

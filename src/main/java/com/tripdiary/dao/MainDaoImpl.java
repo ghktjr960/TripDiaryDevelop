@@ -71,4 +71,9 @@ public class MainDaoImpl implements MainDao{
 	public int listCount() throws Exception {
 		return sqlSession.selectOne("mainMapper.listCount");
 	}
+	
+	@Override
+	public void memberActCntPick(PickCmd pickCmd) throws Exception {
+		sqlSession.update("mainMapper.memberActCntPick", pickCmd);
+	}
 }
