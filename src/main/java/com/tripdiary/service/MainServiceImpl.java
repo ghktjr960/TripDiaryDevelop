@@ -6,10 +6,8 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.tripdiary.controller.PickCmd;
 import com.tripdiary.dao.MainDao;
 import com.tripdiary.vo.MainBoardListVo;
-import com.tripdiary.vo.MemberVo;
 import com.tripdiary.vo.PageVo;
 import com.tripdiary.vo.PickVo;
 import com.tripdiary.vo.ProfileImgVo;
@@ -21,59 +19,40 @@ public class MainServiceImpl implements MainService{
 	@Inject
 	private MainDao mainDao;
 	
+	// 메인 페이지에서 보이는 게시글 목록 : 검색(지역, 태그) 정렬
 	@Override
 	public List<MainBoardListVo> mainBoardList(PageVo pageVo) throws Exception {
 		return mainDao.mainBoardList(pageVo);
 	}
 	
+	// 전체 태그 목록 가져오기
 	@Override
 	public List<TagVo> mainTagList() throws Exception {
 		return mainDao.mainTagList();
 	}
 	
+	// 세션에 저장된 회원번호로 찜하기 눌렀는지 여부 확인
 	@Override
 	public List<PickVo> mainPickList(int memberNum) throws Exception {
 		return mainDao.mainPickList(memberNum);
 	}
 	
-	// 세션 확인용 테스트 코드 삭제해야됨
-	@Override
-	public MemberVo memberLoginTest(String id) throws Exception {
-		return mainDao.memberLoginTest(id);
-	}
-	
-	@Override
-	public PickVo pickCheck(PickVo pickVo) throws Exception {
-		return mainDao.pickCheck(pickVo);
-	}
-	
-	@Override
-	public void pickInsert(PickCmd pickCmd) throws Exception {
-		mainDao.pickInsert(pickCmd);
-	}
-	
-	@Override
-	public void pickDelete(PickVo pickVo) throws Exception {
-		mainDao.pickDelete(pickVo);
-	}
-	
+	// 각 회원마다 프로필 이미지 가져오기
 	@Override
 	public ProfileImgVo profileImg(int memberNum) throws Exception {
 		return mainDao.profileImg(memberNum);
 	}
 	
+	// 검색된 태그 목록가져오기
 	@Override
 	public List<TagVo> tagSearch(PageVo pageVo) throws Exception {
 		return mainDao.tagSearch(pageVo);
 	}
 	
+	// 게시글 총 갯수
 	@Override
 	public int listCount(PageVo pageVo) throws Exception {
 		return mainDao.listCount(pageVo);
 	}
-	
-	@Override
-	public void memberActCntPick(PickCmd pickCmd) throws Exception {
-		mainDao.memberActCntPick(pickCmd);
-	}
+
 }
