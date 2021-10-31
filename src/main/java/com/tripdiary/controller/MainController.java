@@ -63,39 +63,19 @@ public class MainController {
 			session.setAttribute("place",  pageVo.getPlace());
 			session.setAttribute("tag",  pageVo.getTag());
 			
-			// tag검색을 통해 TagVo에 해당하는 정보를 가져온다.
-			// tag검색을 통해 가져온 TagVo에 있는 boardNum으로 검색결과를 나타낸다.
-			if(pageVo.getTag() != null && !pageVo.getTag().equals("")) {
-				List<TagVo> tagSearch = mainService.tagSearch(pageVo);
-				if(tagSearch.isEmpty()) {
-					/* 
-					 * tag검색을 테이블을 따로 사용하기 때문에 검색어가 없을 경우, 검색결과가 없을 때에도 tagSearch은 model에 담기는 값이 없어 null로만 비교하기에는 무리이다.
-					 * tagNoSearchResult를 추가하여 jsp에서 tagSearch가 null이고 tagNoSearchResult이 'tagNoSearchResult'일때를 감지하여 화면을 보여준다.
-					 * Model tagSearch하나만 사용하면 검색결과가 있을 경우 없을 경우 null인지 아닌지로 구분이 힘듬
-					 * jsp에서 empty로 검사하는것과 null로 검사하는 것과 동일한 결과를 가져온다.
-					 *  ${tagSearch eq null} == ${empty tagSearch}
-					 */
-					model.addAttribute("tagSearch", null);
-					model.addAttribute("tagNoSearchResult", "tagNoSearchResult");
-					System.out.println("tagSearch 내용 없음");
-				} else {
-					model.addAttribute("tagSearch", tagSearch);
-					System.out.println(tagSearch.toString());
-				}
-			}
-			
 	 		/* 
 	 		 * 페이징 처리
-	 		 * 
-	 		 * int total = mainService.listCount();
-			 *	if(pageVo.getPage() == null) {
-			 *		pageVo.setPage(1);
-			 *	}
-			 * 	pageVo = new PageVo(pageVo.getSort(), pageVo.getPlace(), pageVo.getTag(), total, pageVo.getPage());
-		 	 *	System.out.println("pageVo toSting" + pageVo.toString());
-			 *	model.addAttribute("paging", pageVo);
-			 */
-
+	 		 */ 
+			int total = mainService.listCount(pageVo);
+		 	if(pageVo.getPage() == null) {
+		 		pageVo.setPage(1);
+		 	}
+		  	pageVo = new PageVo(pageVo.getSort(), pageVo.getPlace(), pageVo.getTag(), total, pageVo.getPage());
+	 	 	System.out.println("pageVo toSting" + pageVo.toString());
+		 	model.addAttribute("paging", pageVo);
+			 
+			System.out.println("pageVo : " + pageVo.toString());
+			
 			// 메인페이지에서 보여줄 게시글들을 가져옴 : sort값과 place값을 사용
 			// 검색시 sort와 place는 하나에 쿼리에서 사용이 가능하지만 tag는 따로 테이블에 요청해 값을 가져와 if문을 사용해 비교해준다.
 			List<MainBoardListVo> mainBoardList = mainService.mainBoardList(pageVo);
@@ -111,9 +91,16 @@ public class MainController {
 			
 			// 메인페이지에서 게시글을 보여줄 때 사용하기 위한 태그결과이다.
 			// 각 게시글 마다 회원 닉네임, 게시글 정보, 태그등을 보여주는데 사용하는 코드
-			List<TagVo> mainTagList = mainService.mainTagList();
-			System.out.println(mainTagList.toString());
-			model.addAttribute("mainTagList", mainTagList);
+			
+			if(pageVo.getTag() != null && !pageVo.getTag().equals("")) {
+				List<TagVo> mainTagList = mainService.tagSearch(pageVo);
+				System.out.println(mainTagList.toString());
+				model.addAttribute("mainTagList", mainTagList);
+			} else {
+				List<TagVo> mainTagList = mainService.mainTagList();
+				System.out.println(mainTagList.toString());
+				model.addAttribute("mainTagList", mainTagList);
+			}
 			
 			// 세션 테스트용 코드 삭제해야됨 : 시작 
 			// 세션에 저장되어 있는 로그인 세션을 검사하여 있다면 해당 세션에 저장된 회원번호를 통해 프로필 사진에 대한 정보를 가져온다.

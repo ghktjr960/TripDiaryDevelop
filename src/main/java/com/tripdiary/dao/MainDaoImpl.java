@@ -68,8 +68,8 @@ public class MainDaoImpl implements MainDao{
 	}
 	
 	@Override
-	public int listCount() throws Exception {
-		return sqlSession.selectOne("mainMapper.listCount");
+	public int listCount(PageVo pageVo) throws Exception {
+		return sqlSession.selectOne("mainMapper.listCount", pageVo);
 	}
 	
 	@Override

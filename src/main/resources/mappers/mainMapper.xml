@@ -10,9 +10,10 @@
 	 	2.이름 맞추기 VO = DB
 	 -->
 	
-	<!-- 게시글 가져오기 -->
+	<!-- 게시글 가져오기 페이징 처리 안한 쿼리 봉인
  	<select id="mainBoardList" parameterType="pageVo" resultType="mainBoardListVo">
- 		<!-- order by a.regdate desc, a.board_num desc : 기본 정렬 => 작성일 순, 게시글 순 -->
+	-->
+ 		<!-- order by a.regdate desc, a.board_num desc : 기본 정렬 => 작성일 순, 게시글 순 
  		select 
  			A.board_num, 
  			A.member_num, 
@@ -33,6 +34,9 @@
 			BOARD_IMG B, 
 			MEMBER C,
 			PROFILE_IMG D
+			<if test='tag!=null and !tag.equals("")'>
+				,(select distinct board_num from tag where tag like '%'||#{tag}||'%') E
+			</if>
 		where 
 			A.board_num = B.board_num 
 			and B.main_img = 1 
@@ -40,6 +44,9 @@
 			and A.member_num = D.member_num
 			<if test='place!=null and !place.equals("")'>
 				and A.place = #{place}
+			</if>
+			<if test='tag!=null and !tag.equals("")'>
+				and A.board_num = E.board_num
 			</if>
 		order by
 		<choose>
@@ -55,12 +62,10 @@
  			<otherwise></otherwise>
  		</choose>
  	</select>
+ 		-->
  	
- 	<!-- 페이징 처리 쿼리문 봉인 
  	<select id="mainBoardList" parameterType="pageVo" resultType="mainBoardListVo">
- 	-->
  		<!-- order by a.regdate desc, a.board_num desc : 기본 정렬 => 작성일 순, 게시글 순 -->
-		<!-- 
  		select 
  			B.RNUM,
             B.board_num, 
@@ -89,29 +94,40 @@
                 A.td_like_cnt
             from 
                 (select
-                    board_num, 
-                    member_num, 
-                    place, 
-                    content, 
-                    regdate, 
-                    tripdate, 
-                    td_like_cnt
+                    BOARD.board_num, 
+                    BOARD.member_num, 
+                    BOARD.place, 
+                    BOARD.content, 
+                    BOARD.regdate, 
+                    BOARD.tripdate, 
+                    BOARD.td_like_cnt
                 from
                     BOARD
+                    <if test='tag!=null and !tag.equals("")'>
+					,(select distinct board_num from tag where tag like '%'||#{tag}||'%') TAG
+					</if>
+                where
+                	<![CDATA[BOARD.board_num > 0]]>
+                	<if test='place!=null and !place.equals("")'>
+					and BOARD.place = #{place}
+					</if>
+					<if test='tag!=null and !tag.equals("")'>
+					and BOARD.board_num = TAG.board_num
+					</if>
                 order by
                     <choose>
                         <when test='sort.equals("regdate")'>
-                            regdate desc, board_num desc
+                            BOARD.regdate desc, BOARD.board_num desc
                         </when>
                         <when test='sort.equals("tripdate")'>
-                            tripdate desc, regdate desc, board_num desc
+                            BOARD.tripdate desc, BOARD.regdate desc, BOARD.board_num desc
                         </when>
                         <when test='sort.equals("like")'>
-                            td_like_cnt desc, regdate desc, board_num desc
+                            BOARD.td_like_cnt desc, BOARD.regdate desc, BOARD.board_num desc
                         </when>
-                        <otherwise></otherwise>
                     </choose>
                 )A
+                
             where 
                 <![CDATA[ROWNUM <= #{endRnum}]]>
 			)B,
@@ -123,12 +139,8 @@
 			and C.main_img = 1 
 			and B.member_num = D.member_num
 			and B.member_num = E.member_num
-            <if test='place!=null and !place.equals("")'>
-				and B.place = #{place}
-			</if>
             <![CDATA[and B.rnum >= #{startRnum}]]>
  	</select>
-		 -->
  	
  	<!-- 찜하기도 가져와야됨 -->
  	<select id="mainPickList" parameterType="Integer" resultType="pickVo">
@@ -168,12 +180,51 @@
  	
  	<!-- 태그검색하는 정보가져오기 -->
  	<select id="tagSearch" parameterType="pageVo" resultType="tagVo">
- 		select * from tag where tag LIKE '%'||#{tag}||'%'
+ 		select 
+ 			* 
+ 		from
+			tag A,
+			(select 
+				board_num 
+			 from 
+			 	tag 
+			 where 
+			 	tag LIKE '%'||#{tag}||'%'
+			 )B
+		where
+			A.board_num = B.board_num
  	</select>
  	
  	<!-- 게시글 전체 갯수 가져오기 -->
-	<select id="listCount" resultType="int">
-		<![CDATA[select count(BOARD_NUM) from BOARD where BOARD_NUM > 0]]>
+	<select id="listCount" parameterType="pageVo" resultType="int">
+		<!-- <![CDATA[select count(BOARD_NUM) from BOARD where BOARD_NUM > 0]]> -->
+		select 
+ 			count(A.board_num)
+		from 
+                (select
+                    BOARD.board_num, 
+                    BOARD.member_num, 
+                    BOARD.place, 
+                    BOARD.content, 
+                    BOARD.regdate, 
+                    BOARD.tripdate, 
+                    BOARD.td_like_cnt
+                from
+                    BOARD
+					<if test='tag!=null and !tag.equals("")'>
+					,(select distinct board_num from tag where tag like '%'||#{tag}||'%') TAG
+                    </if>
+                where
+                	<![CDATA[BOARD.board_num > 0]]>
+                    <if test='place!=null and !place.equals("")'>
+					and BOARD.place = #{place}
+					</if>
+					<if test='tag!=null and !tag.equals("")'>
+					and BOARD.board_num = TAG.board_num
+					</if>            
+                )A
+		where 
+			<![CDATA[A.board_num>0]]>
 	</select>
  	
  	<!-- pick눌렀을 때 member_act_cnt 업데이트-->

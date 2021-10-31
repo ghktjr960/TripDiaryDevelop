@@ -32,7 +32,7 @@ public interface MainService {
 	public List<TagVo> tagSearch(PageVo pageVo) throws Exception;
 
 	// 게시글 총 갯수
-	public int listCount() throws Exception;
+	public int listCount(PageVo pageVo) throws Exception;
 	
 	public void memberActCntPick(PickCmd pickCmd) throws Exception;
 }

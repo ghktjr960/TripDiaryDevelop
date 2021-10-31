@@ -68,8 +68,8 @@ public class MainServiceImpl implements MainService{
 	}
 	
 	@Override
-	public int listCount() throws Exception {
-		return mainDao.listCount();
+	public int listCount(PageVo pageVo) throws Exception {
+		return mainDao.listCount(pageVo);
 	}
 	
 	@Override
