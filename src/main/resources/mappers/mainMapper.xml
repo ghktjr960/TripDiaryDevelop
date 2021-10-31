@@ -127,7 +127,6 @@
                         </when>
                     </choose>
                 )A
-                
             where 
                 <![CDATA[ROWNUM <= #{endRnum}]]>
 			)B,
@@ -140,6 +139,18 @@
 			and B.member_num = D.member_num
 			and B.member_num = E.member_num
             <![CDATA[and B.rnum >= #{startRnum}]]>
+        order by
+			<choose>
+			    <when test='sort.equals("regdate")'>
+			        B.regdate desc, B.board_num desc
+			    </when>
+			    <when test='sort.equals("tripdate")'>
+			        B.tripdate desc, B.regdate desc, B.board_num desc
+			    </when>
+			    <when test='sort.equals("like")'>
+			        B.td_like_cnt desc, B.regdate desc, B.board_num desc
+			    </when>
+			</choose>
  	</select>
  	
  	<!-- 찜하기도 가져와야됨 -->

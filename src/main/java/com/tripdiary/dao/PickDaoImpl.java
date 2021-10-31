@@ -1,12 +1,18 @@
 package com.tripdiary.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.tripdiary.controller.PickCmd;
+import com.tripdiary.vo.MainBoardListVo;
+import com.tripdiary.vo.PageVo;
 import com.tripdiary.vo.PickVo;
+import com.tripdiary.vo.ProfileImgVo;
+import com.tripdiary.vo.TagVo;
 
 @Repository
 public class PickDaoImpl implements PickDao{
@@ -37,5 +43,35 @@ public class PickDaoImpl implements PickDao{
 	public void memberActCntPick(PickCmd pickCmd) throws Exception {
 		sqlSession.update("pickMapper.memberActCntPick", pickCmd);
 	}
-		
+	
+	// 메인 페이지에서 보이는 게시글 목록 : 검색(지역, 태그) 정렬
+	@Override
+	public List<MainBoardListVo> pickPageList(PageVo pageVo) throws Exception {
+		return sqlSession.selectList("pickMapper.pickPageList", pageVo);
+	}
+	
+	// 전체 태그 목록 가져오기
+	@Override
+	public List<TagVo> pickPageTagList() throws Exception {
+		return sqlSession.selectList("pickMapper.pickPageTagList");
+	}
+
+	// 각 회원마다 프로필 이미지 가져오기
+	@Override
+	public ProfileImgVo profileImg(int memberNum) throws Exception {
+		return sqlSession.selectOne("pickMapper.profileImg", memberNum);
+	}
+	
+	// 검색된 태그 목록가져오기
+	@Override
+	public List<TagVo> tagSearch(PageVo pageVo) throws Exception {
+		return sqlSession.selectList("pickMapper.tagSearch", pageVo);
+	}
+	
+	// 게시글 총 갯수
+	@Override
+	public int listCount(PageVo pageVo) throws Exception {
+		return sqlSession.selectOne("pickMapper.listCount", pageVo);
+	}	
+	
 }

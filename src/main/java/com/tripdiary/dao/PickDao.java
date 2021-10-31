@@ -1,7 +1,13 @@
 package com.tripdiary.dao;
 
+import java.util.List;
+
 import com.tripdiary.controller.PickCmd;
+import com.tripdiary.vo.MainBoardListVo;
+import com.tripdiary.vo.PageVo;
 import com.tripdiary.vo.PickVo;
+import com.tripdiary.vo.ProfileImgVo;
+import com.tripdiary.vo.TagVo;
 
 public interface PickDao {
 
@@ -16,5 +22,22 @@ public interface PickDao {
 	
 	// 찜하기 눌렀을 때 member_act_cnt테이블에 각 회원마다 찜하기 누른 횟수 저장
 	public void memberActCntPick(PickCmd pickCmd) throws Exception;
+	
+	// 메인 페이지에서 보이는 게시글 목록 : 검색(지역, 태그) 정렬
+	public List<MainBoardListVo> pickPageList(PageVo pageVo) throws Exception;
+	
+	// 전체 태그 목록 가져오기
+	public List<TagVo> pickPageTagList() throws Exception;
+	
+	// 각 회원마다 프로필 이미지 가져오기
+	public ProfileImgVo profileImg(int memberNum) throws Exception;
+	
+	// 검색된 태그 목록가져오기
+	public List<TagVo> tagSearch(PageVo pageVo) throws Exception;
+
+	// 게시글 총 갯수
+	public int listCount(PageVo pageVo) throws Exception;
+
+	
 	
 }

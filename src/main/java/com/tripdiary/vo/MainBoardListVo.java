@@ -11,6 +11,7 @@ public class MainBoardListVo {
 	private Timestamp regdate;
 	private Date tripdate;
 	private int tdLikeCnt;
+	private int pickNum;
 	private String mainOrgFileName;
 	private String mainStoreFileName;
 	private String mainFileType;
@@ -22,12 +23,11 @@ public class MainBoardListVo {
 	public MainBoardListVo() {
 
 	}
-	
-	public MainBoardListVo(
-			int boardNum, int memberNum, String place, String content, Timestamp regdate, Date tripdate, 
-			int tdLikeCnt, String mainOrgFileName, String mainStoreFileName, String mainFileType, String nickname, 
-			String profileOrgFileName, String profileStoreFileName, String profileFileType) {
-		
+
+	public MainBoardListVo(int boardNum, int memberNum, String place, String content, Timestamp regdate, Date tripdate,
+			int tdLikeCnt, int pickNum, String mainOrgFileName, String mainStoreFileName, String mainFileType,
+			String nickname, String profileOrgFileName, String profileStoreFileName, String profileFileType) {
+		super();
 		this.boardNum = boardNum;
 		this.memberNum = memberNum;
 		this.place = place;
@@ -35,6 +35,7 @@ public class MainBoardListVo {
 		this.regdate = regdate;
 		this.tripdate = tripdate;
 		this.tdLikeCnt = tdLikeCnt;
+		this.pickNum = pickNum;
 		this.mainOrgFileName = mainOrgFileName;
 		this.mainStoreFileName = mainStoreFileName;
 		this.mainFileType = mainFileType;
@@ -100,6 +101,14 @@ public class MainBoardListVo {
 		this.tdLikeCnt = tdLikeCnt;
 	}
 
+	public int getPickNum() {
+		return pickNum;
+	}
+
+	public void setPickNum(int pickNum) {
+		this.pickNum = pickNum;
+	}
+
 	public String getMainOrgFileName() {
 		return mainOrgFileName;
 	}
@@ -160,12 +169,11 @@ public class MainBoardListVo {
 	public String toString() {
 		return "MainBoardListVo [boardNum=" + boardNum + ", memberNum=" + memberNum + ", place=" + place + ", content="
 				+ content + ", regdate=" + regdate + ", tripdate=" + tripdate + ", tdLikeCnt=" + tdLikeCnt
-				+ ", mainOrgFileName=" + mainOrgFileName + ", mainStoreFileName=" + mainStoreFileName
-				+ ", mainFileType=" + mainFileType + ", nickname=" + nickname + ", profileOrgFileName="
-				+ profileOrgFileName + ", profileStoreFileName=" + profileStoreFileName + ", profileFileType="
-				+ profileFileType + "]";
+				+ ", pickNum=" + pickNum + ", mainOrgFileName=" + mainOrgFileName + ", mainStoreFileName="
+				+ mainStoreFileName + ", mainFileType=" + mainFileType + ", nickname=" + nickname
+				+ ", profileOrgFileName=" + profileOrgFileName + ", profileStoreFileName=" + profileStoreFileName
+				+ ", profileFileType=" + profileFileType + "]";
 	}
-
 	
 	
 	

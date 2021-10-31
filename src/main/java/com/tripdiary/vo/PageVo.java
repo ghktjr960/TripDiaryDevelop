@@ -16,6 +16,8 @@ public class PageVo {
 	private int endRnum;		// 끝 rnum
 	private int cntPage = 9;	// 페이지당 글 갯수
 	
+	// 찜하기에서 사용
+	private int memberNum;
 	
 	public PageVo() {
 		// TODO Auto-generated constructor stub
@@ -33,6 +35,20 @@ public class PageVo {
 		this.sort = sort;
 		this.place = place;
 		this.tag = tag;
+		
+		setPage(page);
+		setTotal(total);
+		
+		calcLastPage(getTotal(), getCntPage());
+		calcStartEndPage(getPage(), cntPage);
+		calcStartEndRnum(getPage(), getCntPage());
+	}
+	
+	public PageVo(String sort, String place, String tag, int total, Integer page, int memberNum) {
+		this.sort = sort;
+		this.place = place;
+		this.tag = tag;
+		this.memberNum = memberNum;
 		
 		setPage(page);
 		setTotal(total);
@@ -148,12 +164,22 @@ public class PageVo {
 		this.cntPage = cntPage;
 	}
 
+	public int getMemberNum() {
+		return memberNum;
+	}
+
+	public void setMemberNum(int memberNum) {
+		this.memberNum = memberNum;
+	}
+
 	@Override
 	public String toString() {
 		return "PageVo [sort=" + sort + ", place=" + place + ", tag=" + tag + ", page=" + page + ", startPage="
 				+ startPage + ", endPage=" + endPage + ", total=" + total + ", lastPage=" + lastPage + ", startRnum="
-				+ startRnum + ", endRnum=" + endRnum + ", cntPage=" + cntPage + "]";
+				+ startRnum + ", endRnum=" + endRnum + ", cntPage=" + cntPage + ", memberNum=" + memberNum + "]";
 	}
+
+	
 	
 	
 	
