@@ -14,6 +14,7 @@
 	crossorigin="anonymous" />
 <link href="${pageContext.request.contextPath}/resources/css/style.css" 
 	rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	
 <title>Trip Diary</title>
 
@@ -21,10 +22,14 @@
 
 <body>
 	<jsp:include page="common/header.jsp" flush="false" />
-
+ 		
 	<div class="container">
 		<h1>메인 페이지</h1>
 		<br>
+		
+		<!--  
+		 <input type="button" value="day" onclick="day_night_handler(this)">
+		-->
 		
 		<!-- 지역별 검색 기준, 태그검색을 위한 코드 -->
 		<form name="search" method="get">
@@ -77,7 +82,7 @@
 		<c:if test="${mainBoardList eq null}">
 			<div class="container">
 				<div class="container">
-					<img alt="" src="resources/img/error.png" style="width: 30%;">
+					<img alt="" src="${pageContext.request.contextPath}/resources/img/error.png" style="width: 30%;">
 				</div>
 				<div class="container">
 					<h1>등록된 글이 없습니다.</h1>
@@ -156,7 +161,7 @@
 
 							<!-- 썸네일 이미지 -->
 							<div class="board-mid">
-								<a href="/board?boardNum=${mainBoardList.boardNum}"> 
+								<a href="/board?boardNum=${mainBoardList.boardNum}&memberNum=${mainBoardList.memberNum}"> 
 									<img class="image-thumbnail border border-secondary mt-3"
 									src="<spring:url value='/main/${mainBoardList.mainStoreFileName}.${mainBoardList.mainFileType}'/>"
 									style="width: 100%;">
@@ -166,7 +171,7 @@
 							<!-- 하단 정보부분 -->
 							<div class="board-bottom mt-5 mb-3">
 								<div>
-									여행날짜 : <fmt:formatDate value="${mainBoardList.tripdate}" pattern="yyyy-MM-dd" />
+									여행날짜 : <fmt:formatDate value="${mainBoardList.tripdate}" pattern="yyyy-MM-dd" /><br>
 								</div>
 								<div>
 									좋아요 ${mainBoardList.tdLikeCnt}개
@@ -221,5 +226,40 @@
 	</div>
 
 	<jsp:include page="common/sidebar.jsp" flush="false" />
+		<script>
+	        // 링크 색 바꾸기
+	        function LinkSetColor(color){
+	            var alist = document.querySelectorAll('a');
+	            for(var i = 0; i < alist.length; i++)
+	                alist[i].style.color = color;
+	        }
+	
+	        // 바디 글자색 바꾸기
+	        function BodySetColor(color){
+	            document.querySelector('body').style.color = color;
+	        }
+	
+	        // 바디 배경색 바꾸기
+	        function BodySetBackgroundColor(color){
+	            document.querySelector('body').style.backgroundColor = color;
+	        }
+	
+	        // 주간, 야간모드
+	        function day_night_handler(self) {
+	            var target = document.querySelector('body');
+	            if (self.value == 'day') {
+	                BodySetBackgroundColor('RGB(25,25,25)');
+	                BodySetColor('white');
+	                LinkSetColor('powderblue')
+	                self.value = 'night';
+	            }
+	            else {
+	                BodySetBackgroundColor('white');
+	                BodySetColor('black');
+	                LinkSetColor('blue')
+	                self.value = 'day';
+	            }
+	        }
+ 		</script>
 </body>
 </html>

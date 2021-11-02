@@ -7,10 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
+
 <body>
 	<div id="fixedicon2" class="mb-5">
+			
 		<c:if test="${not empty drakMode}">
-			<img class="icon" alt="" src="resources/img/darkmode.png" style="width: 70px;margin-top: 12%; margin-bottom: 12%;">
+				<img class="icon" alt="" src="resources/img/darkmode.png" style="width: 70px;margin-top: 12%; margin-bottom: 12%;">
 		</c:if>
 		<img class="icon" alt="" src="resources/img/darkmode2.png" style="width: 70px; margin-bottom: 12%;">
 		<a href="/write"><img class="icon" alt="" src="resources/img/write.png" style="width: 70px; margin-bottom: 12%;"></a>

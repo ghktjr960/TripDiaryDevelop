@@ -25,11 +25,7 @@ public class HomeController {
 	public String about() {
 		return "about";
 	}
-	
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String admin() {
-		return "admin";
-	}
+
 	
 	@RequestMapping(value = "myPage", method = RequestMethod.GET)
 	public String myPage() {

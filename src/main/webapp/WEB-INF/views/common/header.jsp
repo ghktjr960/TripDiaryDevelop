@@ -10,7 +10,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light header shadow">
-		<a class="logo" href="/main"><img alt="" src="resources/img/logo.png"></a>
+		<a class="logo" href="/main"><img alt="" src="<c:url value='${pageContext.request.contextPath}/resources/img/logo.png'/>"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -68,8 +68,8 @@
 		</div>	
 	</nav>
 	
-	<script src="resources/js/jquery.min.js"></script>
-	<script src="resources/js/popper.js"></script>
-	<script src="resources/js/bootstrap.min.js"></script>	
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/popper.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>	
 </body>
 </html>

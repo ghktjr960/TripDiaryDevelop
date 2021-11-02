@@ -22,7 +22,7 @@
 	
 	<div class="container">
 			<div class="container">
-				<img alt="" src="resources/img/pageError.png" style="width: 40%;">
+				<img alt="" src="${pageContext.request.contextPath}/resources/img/pageError.png" style="width: 40%;">
 			</div>	
 			<div class="container">
 				<h1>

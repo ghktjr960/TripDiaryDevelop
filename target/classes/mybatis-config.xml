@@ -14,5 +14,8 @@
 			<typeAlias alias="memberVo" type="com.tripdiary.vo.MemberVo"/>
 			<typeAlias alias="profileImgVo" type="com.tripdiary.vo.ProfileImgVo"/>
 			<typeAlias alias="pageVo" type="com.tripdiary.vo.PageVo"/>
+			<typeAlias alias="reportCntVo" type="com.tripdiary.vo.ReportCntVo"/>
+			<typeAlias alias="delMemberVo" type="com.tripdiary.vo.DelMemberVo"/>
+			<typeAlias alias="reportBoardVo" type="com.tripdiary.vo.ReportBoardVo"/>
 		</typeAliases>
 </configuration>

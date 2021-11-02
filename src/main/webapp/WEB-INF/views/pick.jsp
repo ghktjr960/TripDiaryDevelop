@@ -131,7 +131,7 @@
 
 							<!-- 썸네일 이미지 -->
 							<div class="board-mid">
-								<a href="/board?boardNum=${pickPageList.boardNum}"> 
+								<a href="/board?boardNum=${pickPageList.boardNum}&memberNum=${pickPageList.memberNum}"> 
 									<img class="image-thumbnail border border-secondary mt-3"
 									src="<spring:url value='/main/${pickPageList.mainStoreFileName}.${pickPageList.mainFileType}'/>"
 									style="width: 100%;">
@@ -175,7 +175,7 @@
 		<div class="col-md-offset-3">
 			<ul class="container">
 				<c:if test="${paging.startPage != 1}">
-					<a href="/main?page=${paging.startPage - 1}">&lt;</a>
+					<a href="/pick?page=${paging.startPage - 1}">&lt;</a>
 				</c:if>
 				<c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
 					<c:choose>
@@ -183,12 +183,12 @@
 							<b>[${i}]</b>
 						</c:when>
 						<c:when test="${i != paging.page}">
-							<a href="/main?page=${i}">${i}</a>
+							<a href="/pick?page=${i}">${i}</a>
 						</c:when>
 					</c:choose>
 				</c:forEach>
 				<c:if test="${paging.endPage != paging.lastPage}">
-					<a href="/main?page=${paging.endPage + 1}">&gt;</a>
+					<a href="/pick?page=${paging.endPage + 1}">&gt;</a>
 				</c:if>
 			</ul>		
 		</div>
