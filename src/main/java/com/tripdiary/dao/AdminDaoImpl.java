@@ -11,6 +11,7 @@ import com.tripdiary.vo.DelMemberVo;
 import com.tripdiary.vo.MemberVo;
 import com.tripdiary.vo.ReportBoardVo;
 import com.tripdiary.vo.ReportCntVo;
+import com.tripdiary.vo.ReportReplyVo;
 
 @Repository
 public class AdminDaoImpl implements AdminDao{
@@ -102,5 +103,33 @@ public class AdminDaoImpl implements AdminDao{
 		sqlSession.update("adminMapper.reportCntReceive", memberNumReceive);
 	}
 	
-
+	// 댓글 신고 내역
+	@Override
+	public List<ReportReplyVo> reportReplyList() {
+		return sqlSession.selectList("adminMapper.reportReplyList");
+	}
+	
+	// 댓글 신고 내역 게시글 하나
+	@Override
+	public ReportReplyVo reportReplyOne(int reportReplyNum) {
+		return sqlSession.selectOne("adminMapper.reportReplyOne", reportReplyNum);
+	}	
+	
+	// report_reply 테이블에서 삭제
+	@Override
+	public void reportReplyDelete(ReportReplyVo reportReplyVo) {
+		sqlSession.delete("adminMapper.reportReplyDelete", reportReplyVo);
+	}
+	
+	// reply 테이블에서 삭제
+	@Override
+	public void mainReplyDelete(ReportReplyVo reportReplyVo) {
+		sqlSession.delete("adminMapper.mainReplyDelete", reportReplyVo);
+	}	
+	
+	// report_member 테이블에 추가 (회원, 사유)
+	@Override
+	public void reportMemberInsertReply(ReportReplyVo reportReplyVo) {
+		sqlSession.insert("adminMapper.reportMemberInsertReply", reportReplyVo);
+	}
 }

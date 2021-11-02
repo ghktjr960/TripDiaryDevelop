@@ -6,6 +6,7 @@ import com.tripdiary.vo.DelMemberVo;
 import com.tripdiary.vo.MemberVo;
 import com.tripdiary.vo.ReportBoardVo;
 import com.tripdiary.vo.ReportCntVo;
+import com.tripdiary.vo.ReportReplyVo;
 
 public interface AdminService {
 	
@@ -50,9 +51,21 @@ public interface AdminService {
 	
 	// report_cnt 테이블에 update 경고 완료 처리
 	public void reportCntReceive(int memberNumReceive);
+	
+	// 댓글 신고 내역
+	public List<ReportReplyVo> reportReplyList();
+	
+	// 댓글 신고 내역 게시글 하나
+	public ReportReplyVo reportReplyOne(int reportReplyNum);
 
+	// report_reply 테이블에서 삭제
+	public void reportReplyDelete(ReportReplyVo reportReplyVo); 
 
+	// reply 테이블에서 삭제
+	public void mainReplyDelete(ReportReplyVo reportReplyVo); 
 
+	// report_member 테이블에 추가 (회원, 사유)
+	public void reportMemberInsertReply(ReportReplyVo reportReplyVo);
 
 
 

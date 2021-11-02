@@ -47,11 +47,8 @@
 		select * from member where member_num = #{memberNum}
 	</select>
 	
-	<select id="reportBoardList" parameterType="int" resultType="reportBoardVo">
+	<select id="reportBoardList" resultType="reportBoardVo">
 		select * from report_board
-			<if test="_parameter != null">
-				where report_board_num = #{reportBoardNum}
-			</if>
 	</select>
 
 	<select id="reportBoardOne" parameterType="int" resultType="reportBoardVo">
@@ -77,4 +74,26 @@
 	<update id="reportCntReceive" parameterType="int">
 		update report_cnt set warning_cnt = warning_cnt+1 where member_num = #{memberNumReceive}
 	</update>
+	
+	<select id="reportReplyList" resultType="reportReplyVo">
+		select * from report_reply
+	</select>
+
+	<select id="reportReplyOne" parameterType="int" resultType="reportReplyVo">
+		select * from report_reply where report_reply_num = #{reportReplyNum}
+	</select>
+	
+	<delete id="reportReplyDelete" parameterType="reportReplyVo">
+		delete from report_reply where report_reply_num = #{reportReplyNum}
+	</delete>
+	
+	<delete id="mainReplyDelete" parameterType="reportReplyVo">
+		delete from reply where reply_num = #{replyNum}
+	</delete>
+	
+	<!-- 똑같은 코드임 수정해야됨 -->
+	<insert id="reportMemberInsertReply" parameterType="reportReplyVo">
+		insert into report_member values(report_member_seq.nextval, #{memberNumReceive}, #{reportType})
+	</insert>
+	
 </mapper>

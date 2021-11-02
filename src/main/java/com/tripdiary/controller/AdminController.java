@@ -17,6 +17,7 @@ import com.tripdiary.vo.DelMemberVo;
 import com.tripdiary.vo.MemberVo;
 import com.tripdiary.vo.ReportBoardVo;
 import com.tripdiary.vo.ReportCntVo;
+import com.tripdiary.vo.ReportReplyVo;
 
 @Controller
 public class AdminController {
@@ -98,7 +99,7 @@ public class AdminController {
 		}
 		
 	}
-
+	
 	@RequestMapping(value="/admin/delmember", method = RequestMethod.POST)
 	public String delMemberPost(String memberNumList) {
 		
@@ -123,16 +124,22 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/board", method = RequestMethod.GET)
-	public String reportBoardGet(Model model) {
-		List<ReportBoardVo> reportBoardList = adminService.reportBoardList();
-		
-		if(reportBoardList.isEmpty()) {
-			model.addAttribute("reportBoardList", null);
+	public String reportBoardGet(Model model, HttpSession session) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberLoginTest");
+			if(memberVo != null && memberVo.isAdmin() == true) {
+				
+			List<ReportBoardVo> reportBoardList = adminService.reportBoardList();
+			
+			if(reportBoardList.isEmpty()) {
+				model.addAttribute("reportBoardList", null);
+			} else {
+				model.addAttribute("reportBoardList", reportBoardList);
+			}
+			
+			return "reportBoard";
 		} else {
-			model.addAttribute("reportBoardList", reportBoardList);
+			return "redirect:/";
 		}
-		
-		return "reportBoard";
 	}
 	
 	@RequestMapping(value="/admin/board", method = RequestMethod.POST)
@@ -155,6 +162,44 @@ public class AdminController {
 		return "redirect:/admin/board";
 	}
 	
+	@RequestMapping(value="/admin/reply", method = RequestMethod.GET)
+	public String reportReplyGet(Model model, HttpSession session) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberLoginTest");
+			if(memberVo != null && memberVo.isAdmin() == true) {
+			List<ReportReplyVo> reportReplyList = adminService.reportReplyList();
+			
+			if(reportReplyList.isEmpty()) {
+				model.addAttribute("reportReplyList", null);
+			} else {
+				model.addAttribute("reportReplyList", reportReplyList);
+			}
+			
+			return "reportReply";
+		} else {
+			return "redirect:/";
+		}
+	}
+	
+	
+	@RequestMapping(value="/admin/reply", method = RequestMethod.POST)
+	public String reportReplyPost(String reportReplyNumList) {
+		
+		if(reportReplyNumList != null) {
+			// check 박스 여러러개 받을 경우
+			String[] reportReplyNum = reportReplyNumList.split(",");
+			for(int i = 0; i < reportReplyNum.length; i++) {
+				System.out.println("reportReplyNum : " + reportReplyNum[i]);
+				ReportReplyVo reportReplyVo = adminService.reportReplyOne(Integer.parseInt(reportReplyNum[i]));
+				adminService.reportReplyDelete(reportReplyVo);
+				adminService.mainReplyDelete(reportReplyVo);
+				adminService.reportMemberInsertReply(reportReplyVo);
+				adminService.reportCntSend(reportReplyVo.getMemberNumSend());
+				adminService.reportCntReceive(reportReplyVo.getMemberNumReceive());
+			}
+		}
+		
+		return "redirect:/admin/reply";
+	}
 	
 	
 }

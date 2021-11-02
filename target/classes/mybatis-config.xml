@@ -17,5 +17,6 @@
 			<typeAlias alias="reportCntVo" type="com.tripdiary.vo.ReportCntVo"/>
 			<typeAlias alias="delMemberVo" type="com.tripdiary.vo.DelMemberVo"/>
 			<typeAlias alias="reportBoardVo" type="com.tripdiary.vo.ReportBoardVo"/>
+			<typeAlias alias="reportReplyVo" type="com.tripdiary.vo.ReportReplyVo"/>
 		</typeAliases>
 </configuration>
