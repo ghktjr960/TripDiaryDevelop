@@ -21,7 +21,7 @@
 </head>
 
 <body>
-	<jsp:include page="common/header.jsp" flush="false" />
+	<jsp:include page="../${pageContext.request.contextPath}/common/header.jsp" flush="false" />
  		
 	<div class="container">
 		<h1>메인 페이지</h1>
@@ -222,7 +222,7 @@
 		
 	</div>
 
-	<jsp:include page="common/sidebar.jsp" flush="false" />
+	<jsp:include page="../${pageContext.request.contextPath}/common/sidebar.jsp" flush="false" />
 		<script>
 	        // 링크 색 바꾸기
 	        function LinkSetColor(color){

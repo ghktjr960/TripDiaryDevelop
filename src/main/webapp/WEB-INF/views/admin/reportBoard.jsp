@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	
+	<jsp:include page="../${pageContext.request.contextPath}/common/header.jsp" flush="false" />
 	<div class="container">
 		<h2>관리자 페이지</h2>
 		<br>
@@ -72,6 +72,6 @@
 		</c:choose>
 	</div>
 	
-	<jsp:include page="common/header.jsp" flush="false" />
+
 </body>
 </html>

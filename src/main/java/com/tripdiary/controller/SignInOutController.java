@@ -24,7 +24,7 @@ public class SignInOutController {
 	// 세션 확인용 로그인 테스트 코드 : 삭제해야됨 : 시작
 	@RequestMapping(value = "/signIn", method = RequestMethod.GET)
 	public String signInGet() {
-		return "signIn";
+		return "/sign/signIn";
 	}
 	
 	@RequestMapping(value = "/signIn", method = RequestMethod.POST)
@@ -40,7 +40,7 @@ public class SignInOutController {
 			session.setAttribute("memberLoginTest", memberLoginTest);
 			return "redirect:/main";
 		} else {
-			return "signIn";
+			return "/sign/signIn";
 		}
 	}
 	@RequestMapping(value = "/signOut", method = RequestMethod.GET)

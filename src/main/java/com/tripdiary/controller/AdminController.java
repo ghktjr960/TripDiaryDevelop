@@ -46,7 +46,7 @@ public class AdminController {
 			List<ReportCntVo> reportCnt = adminService.reportCntVo(reportCntVo);
 			model.addAttribute("reportCnt", reportCnt);
 			
-			return "adminMember";
+			return "/admin/adminMember";
 		} else {
 			return "redirect:/";
 		}
@@ -94,7 +94,7 @@ public class AdminController {
 			} else {
 				model.addAttribute("delMember", delMember);
 			}
-			return "delMember";
+			return "/admin/delMember";
 		} else {
 			return "redirect:/";
 		}
@@ -137,7 +137,7 @@ public class AdminController {
 				model.addAttribute("reportBoardList", reportBoardList);
 			}
 			
-			return "reportBoard";
+			return "/admin/reportBoard";
 		} else {
 			return "redirect:/";
 		}
@@ -188,7 +188,7 @@ public class AdminController {
 				model.addAttribute("reportReplyList", reportReplyList);
 			}
 			
-			return "reportReply";
+			return "/admin/reportReply";
 		} else {
 			return "redirect:/";
 		}

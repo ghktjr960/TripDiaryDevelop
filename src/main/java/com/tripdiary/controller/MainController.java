@@ -117,7 +117,7 @@ public class MainController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "main";
+		return "/main/main";
 	}
 	
 }

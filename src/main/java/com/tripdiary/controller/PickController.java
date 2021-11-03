@@ -195,7 +195,7 @@ public class PickController {
 			session.setAttribute("profileImg", profileImgVo);
 			
 			// 로그인 테스트용 코드 삭제해야됨 : 끝		
-			return "pick";
+			return "/pick/pick";
 		} else {
 			return "redirect:/";
 		}

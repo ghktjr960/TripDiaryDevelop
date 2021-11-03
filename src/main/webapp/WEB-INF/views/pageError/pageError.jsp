@@ -18,7 +18,7 @@
 
 </head>
 <body>
-	<jsp:include page="common/header.jsp" flush="false" />
+	<jsp:include page="../${pageContext.request.contextPath}/common/header.jsp" flush="false" />
 	
 	<div class="container">
 			<div class="container">

@@ -17,7 +17,7 @@ public class PageErrorController {
 	// 에러페이지
 	@RequestMapping(value = "/pageError", method = RequestMethod.GET)
 	public String pageError(HttpServletResponse response, Model model) {
-		return "pageError";
+		return "/pageError/pageError";
 	}
 
 }
