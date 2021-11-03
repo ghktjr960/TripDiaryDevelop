@@ -77,10 +77,7 @@
 		<c:if test="${pickPageList eq null}">
 			<div class="container">
 				<div class="container">
-					<img alt="" src="resources/img/error.png" style="width: 30%;">
-				</div>
-				<div class="container">
-					<h1>등록된 글이 없습니다.</h1>
+					<img alt="" src="${pageContext.request.contextPath}/resources/img/notexist.png" style="width: 30%;">
 				</div>
 			</div>
 		</c:if>
