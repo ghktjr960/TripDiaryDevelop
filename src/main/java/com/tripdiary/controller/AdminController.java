@@ -3,6 +3,7 @@ package com.tripdiary.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -143,22 +144,35 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/board", method = RequestMethod.POST)
-	public String reportBoardPost(String reportBoardNumList) {
-		
-		if(reportBoardNumList != null) {
-			// check 박스 여러러개 받을 경우
-			String[] reportBoardNum = reportBoardNumList.split(",");
-			for(int i = 0; i < reportBoardNum.length; i++) {
-				System.out.println("reportBoardNum : " + reportBoardNum[i]);
-				ReportBoardVo reportBoardVo = adminService.reportBoardOne(Integer.parseInt(reportBoardNum[i]));
-				adminService.reportBoardDelete(reportBoardVo);
-				adminService.mainBoardDelete(reportBoardVo);
-				adminService.reportMemberInsert(reportBoardVo);
-				adminService.reportCntSend(reportBoardVo.getMemberNumSend());
-				adminService.reportCntReceive(reportBoardVo.getMemberNumReceive());
+	public String reportBoardPost(String reportBoardNumList, HttpServletRequest req) {
+		System.out.println("reply req : " + req.getParameter("prom"));
+		String problem = req.getParameter("prom");
+
+		if(problem.equals("Y")) {
+			if(reportBoardNumList != null) {
+				// check 박스 여러러개 받을 경우
+				String[] reportBoardNum = reportBoardNumList.split(",");
+				for(int i = 0; i < reportBoardNum.length; i++) {
+					System.out.println("reportBoardNum : " + reportBoardNum[i]);
+					ReportBoardVo reportBoardVo = adminService.reportBoardOne(Integer.parseInt(reportBoardNum[i]));
+					adminService.reportBoardDelete(reportBoardVo);
+					adminService.mainBoardDelete(reportBoardVo);
+					adminService.reportMemberInsert(reportBoardVo);
+					adminService.reportCntSend(reportBoardVo.getMemberNumSend());
+					adminService.reportCntReceive(reportBoardVo.getMemberNumReceive());
+				}
+			}
+		} else if(problem.equals("N")) {
+			if(reportBoardNumList != null) {
+				// check 박스 여러러개 받을 경우
+				String[] reportBoardNum = reportBoardNumList.split(",");
+				for(int i = 0; i < reportBoardNum.length; i++) {
+					System.out.println("reportBoardNum : " + reportBoardNum[i]);
+					ReportBoardVo reportBoardVo = adminService.reportBoardOne(Integer.parseInt(reportBoardNum[i]));
+					adminService.reportBoardDelete(reportBoardVo);
+				}
 			}
 		}
-		
 		return "redirect:/admin/board";
 	}
 	
@@ -182,20 +196,36 @@ public class AdminController {
 	
 	
 	@RequestMapping(value="/admin/reply", method = RequestMethod.POST)
-	public String reportReplyPost(String reportReplyNumList) {
+	public String reportReplyPost(String reportReplyNumList, HttpServletRequest req) {
 		
-		if(reportReplyNumList != null) {
-			// check 박스 여러러개 받을 경우
-			String[] reportReplyNum = reportReplyNumList.split(",");
-			for(int i = 0; i < reportReplyNum.length; i++) {
-				System.out.println("reportReplyNum : " + reportReplyNum[i]);
-				ReportReplyVo reportReplyVo = adminService.reportReplyOne(Integer.parseInt(reportReplyNum[i]));
-				adminService.reportReplyDelete(reportReplyVo);
-				adminService.mainReplyDelete(reportReplyVo);
-				adminService.reportMemberInsertReply(reportReplyVo);
-				adminService.reportCntSend(reportReplyVo.getMemberNumSend());
-				adminService.reportCntReceive(reportReplyVo.getMemberNumReceive());
+		System.out.println("reply req : " + req.getParameter("prom"));
+		String problem = req.getParameter("prom");
+		
+		if(problem.equals("Y")) {
+			if(reportReplyNumList != null) {
+				// check 박스 여러러개 받을 경우
+				String[] reportReplyNum = reportReplyNumList.split(",");
+				for(int i = 0; i < reportReplyNum.length; i++) {
+					System.out.println("reportReplyNum : " + reportReplyNum[i]);
+					ReportReplyVo reportReplyVo = adminService.reportReplyOne(Integer.parseInt(reportReplyNum[i]));
+					adminService.reportReplyDelete(reportReplyVo);
+					adminService.mainReplyDelete(reportReplyVo);
+					adminService.reportMemberInsertReply(reportReplyVo);
+					adminService.reportCntSend(reportReplyVo.getMemberNumSend());
+					adminService.reportCntReceive(reportReplyVo.getMemberNumReceive());
+				}
 			}
+		} else if(problem.equals("N")) {
+			if(reportReplyNumList != null) {
+				// check 박스 여러러개 받을 경우
+				String[] reportReplyNum = reportReplyNumList.split(",");
+				for(int i = 0; i < reportReplyNum.length; i++) {
+					System.out.println("reportReplyNum : " + reportReplyNum[i]);
+					ReportReplyVo reportReplyVo = adminService.reportReplyOne(Integer.parseInt(reportReplyNum[i]));
+					adminService.reportReplyDelete(reportReplyVo);
+				}
+			}
+			
 		}
 		
 		return "redirect:/admin/reply";

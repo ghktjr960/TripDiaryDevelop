@@ -63,7 +63,8 @@
 						</tr>						
 						</c:forEach>
 					</table>
-					<input type="submit" value="전송">
+					<button type="submit" name="prom" value="Y">댓글삭제</button>
+					<button type="submit" name="prom" value="N">문제없음</button>
 				</form>
 			</c:otherwise>
 		</c:choose>
